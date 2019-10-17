@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <!--group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_log_out"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="Log Out" />
+        <item
+            android:id="@+id/nav_physician_info"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="Physician Info" />
+
+    </group-->
+
+    <item android:title="Physicians">
+        <menu>
+            <item
+                android:id="@+id/nav_log_out"
+                android:icon="@drawable/ic_menu_gallery"
+                android:title="Log Out" />
+            <item
+                android:id="@+id/nav_physician_info"
+                android:icon="@drawable/ic_menu_gallery"
+                android:title="Physician Info" />
+        </menu>
+    </item>
+
+    <item android:title="Patients">
+        <menu>
+            <item
+                android:id="@+id/nav_patient_list"
+                android:icon="@drawable/ic_menu_share"
+                android:title="Patient List" />
+            <item
+                android:id="@+id/nav_new_patient"
+                android:icon="@drawable/ic_menu_share"
+                android:title="New Patient" />
+            <item
+                android:id="@+id/nav_patient_log_out"
+                android:icon="@drawable/ic_menu_share"
+                android:title="Patient Log Out" />
+        </menu>
+    </item>
+
+</menu>
