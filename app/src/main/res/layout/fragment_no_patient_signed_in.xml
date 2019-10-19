@@ -5,28 +5,46 @@
     android:layout_height="match_parent"
     tools:context=".Fragments.NoPatientSignedInFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/gray">
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="No Patient Signed In" />
+            android:layout_height="wrap_content"
+            android:text="Select a patient to continue."
+            android:textColor="@color/colorPrimary"
+            android:textSize="18dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginBottom="25dp"
+            android:layout_gravity="center"
+            android:gravity="center"/>
 
         <Button
             android:id="@+id/patient_list_button"
-            android:layout_width="wrap_content"
+            android:layout_marginLeft="25dp"
+            android:layout_marginBottom="25dp"
+            android:layout_marginRight="25dp"
+            android:background="@color/colorAccent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Search for Existing Patient"/>
+            android:padding="10dp"
+            android:drawableTop="@drawable/rough_patient_list_logo"
+            android:text="Patient List"/>
 
         <Button
             android:id="@+id/new_patient_button"
-            android:layout_width="wrap_content"
+            android:layout_marginLeft="25dp"
+            android:layout_marginRight="25dp"
+            android:layout_marginBottom="25dp"
+
+            android:background="@color/colorAccent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:drawableTop="@drawable/rough_add_patient_logo"
             android:text="Create New Patient"/>
     </LinearLayout>
 

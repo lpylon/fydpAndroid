@@ -100,7 +100,7 @@ public class NewPatientFragment extends Fragment {
                     dateOfBirth.getEditableText().toString(),
                     phoneNumber.getEditableText().toString());
 
-            DatabaseHelper databaseHelper = new DatabaseHelper(getContext());
+            DatabaseHelper databaseHelper = new DatabaseHelper(getActivity().getApplicationContext());
             databaseHelper.addNewPatient(patient);
 
             //TODO add patient to database
@@ -110,7 +110,7 @@ public class NewPatientFragment extends Fragment {
             mListener.onFragmentInteraction();
             FragmentTransaction fragmentTransaction = getActivity()
                     .getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.patient_content, new PatientListFragment());
+            fragmentTransaction.replace(R.id.patient_content, new PatientInfoFragment());
             fragmentTransaction.commit();
         }
     }

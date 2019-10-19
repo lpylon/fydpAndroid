@@ -74,7 +74,7 @@ public class CameraTestActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera_test);
-        textureView = (TextureView) findViewById(R.id.texture);
+        textureView = (TextureView) findViewById(R.id.surfaceView);
         assert textureView != null;
         textureView.setSurfaceTextureListener(textureListener);
         takePictureButton = (Button) findViewById(R.id.btn_takepicture);

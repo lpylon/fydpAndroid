@@ -2,35 +2,27 @@ package com.fydp.fundusapp.Fragments;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.ContextCompat;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.TextView;
+import android.widget.Button;
 
-import com.fydp.fundusapp.DatabaseHelper;
-import com.fydp.fundusapp.Objects.Patient;
 import com.fydp.fundusapp.R;
-
-import java.util.List;
+import com.fydp.fundusapp.VideoActivity;
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link PatientListFragment.OnFragmentInteractionListener} interface
+ * {@link PatientInfoFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link PatientListFragment#newInstance} factory method to
+ * Use the {@link PatientInfoFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class PatientListFragment extends Fragment {
+public class PatientInfoFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -42,7 +34,9 @@ public class PatientListFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public PatientListFragment() {
+    private Button newVideoButton;
+
+    public PatientInfoFragment() {
         // Required empty public constructor
     }
 
@@ -52,11 +46,11 @@ public class PatientListFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment PatientListFragment.
+     * @return A new instance of fragment PatientInfoFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static PatientListFragment newInstance(String param1, String param2) {
-        PatientListFragment fragment = new PatientListFragment();
+    public static PatientInfoFragment newInstance(String param1, String param2) {
+        PatientInfoFragment fragment = new PatientInfoFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -77,48 +71,33 @@ public class PatientListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view2 =  inflater.inflate(R.layout.fragment_patient_list, container, false);
-        ListView listView = view2.findViewById(R.id.list_patients);
-
-        DatabaseHelper databaseHelper = new DatabaseHelper(getActivity().getApplicationContext());
-
-        final List<Patient> patients = databaseHelper.getallusers();
-        ArrayAdapter arrayAdapter = new ArrayAdapter<Patient>(getActivity().getApplicationContext(), android.R.layout.simple_expandable_list_item_1, patients){
+        View view = inflater.inflate(R.layout.fragment_patient_info, container, false);
+        newVideoButton = view.findViewById(R.id.take_video_button);
+        newVideoButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public View getView(int position, View convertView,  ViewGroup parent){
-                TextView item = (TextView) super.getView(position,convertView,parent);
-
-                item.setTextColor(ContextCompat.getColor(getActivity().getApplicationContext(), R.color.colorPrimary));
-                item.setText(patients.get(position).getFirstName() + " " + patients.get(position).getLastName());
-                item.setTextSize(TypedValue.COMPLEX_UNIT_DIP,18);
-                return item;
+            public void onClick(View view) {
+                onButtonPressed(view);
             }
-        };
-
-        listView.setAdapter(arrayAdapter);
-        listView.setOnItemClickListener((parent, view, position, id) -> {
-            Patient patient = patients.get(position);
-
-            mListener.onFragmentInteraction();
-            FragmentTransaction fragmentTransaction = getActivity()
-                    .getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.patient_content, new PatientInfoFragment());
-            fragmentTransaction.commit();
-
-            //TODO switch to patient fragment here
-            //Intent intent = new Intent(getActivity().getApplicationContext(), CustomerDetailsActivity.class);
-            //intent.putExtra("CUSTOMER", user);
-            //startActivity(intent);
-
         });
-
-        return view2;
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed() {
+    public void onButtonPressed(View view) {
         if (mListener != null) {
             mListener.onFragmentInteraction();
+            //Fragment nextFragment = null;
+            switch(view.getId()) {
+                case R.id.take_video_button:
+                    Intent takeAVideo = new Intent(getActivity().getApplicationContext(), VideoActivity.class);
+                    startActivity(takeAVideo);
+                    break;
+            }
+            //mListener.onFragmentInteraction();
+            //FragmentTransaction fragmentTransaction = getActivity()
+            //        .getSupportFragmentManager().beginTransaction();
+            //fragmentTransaction.replace(R.id.patient_content, nextFragment);
+            //fragmentTransaction.commit();
         }
     }
 

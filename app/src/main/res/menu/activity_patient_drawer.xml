@@ -15,6 +15,8 @@
 
     </group-->
 
+    <group  android:checkableBehavior="single">
+
     <item android:title="Physicians">
         <menu>
             <item
@@ -44,5 +46,6 @@
                 android:title="Patient Log Out" />
         </menu>
     </item>
+    </group>
 
 </menu>

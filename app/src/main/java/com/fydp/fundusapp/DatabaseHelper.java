@@ -34,18 +34,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     private String CREATE_PHYSICIAN_TABLE = "CREATE TABLE " + TABLE_PHYSICIANS + "("
             + PHYSICIAN_ID + " TEXT PRIMARY KEY,"
-            + USERNAME + "TEXT,"
-            + PASSWORD + "TEXT,"
+            + USERNAME + " TEXT,"
+            + PASSWORD + " TEXT,"
             + PYSICIAN_FIRST_NAME + " TEXT DEFAULT 0,"
-            + PYSICIAN_LAST_NAME + "TEXT DEFAULT 0)";
+            + PYSICIAN_LAST_NAME + " TEXT DEFAULT 0)";
 
 
     private String CREATE_PATIENT_TABLE = "CREATE TABLE " + TABLE_PATIENTS + "("
             + PATIENT_ID + " TEXT PRIMARY KEY,"
-            + PATIENT_FIRST_NAME + "TEXT,"
-            + PATIENT_LAST_NAME + "TEXT,"
+            + PATIENT_FIRST_NAME + " TEXT,"
+            + PATIENT_LAST_NAME + " TEXT,"
             + PATIENT_DATE_OF_BIRTH + " TEXT DEFAULT 0,"
-            + PHONE_NUMBER + "TEXT DEFAULT 0)";
+            + PHONE_NUMBER + " TEXT DEFAULT 0)";
 
 
     public DatabaseHelper(Context context) {
@@ -99,11 +99,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
         return userList;
     }
-
-
-
-
-
 
 
 }

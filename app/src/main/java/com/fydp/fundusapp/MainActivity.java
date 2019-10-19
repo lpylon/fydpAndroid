@@ -7,7 +7,13 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 
+import com.fydp.fundusapp.Objects.Patient;
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+
+    public static final String SHARED_PREFS_PATIENT = "patient_shared_prefs";
+    public static final String SHARED_PREFS_PHYSICIAN = "physician_shared_prefs";
+
     Button physicianSignIn;
     Button administratorMenu;
 
@@ -28,7 +34,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.physician_sign_in_button:
-                Intent physicianSignInIntent = new Intent(this, PhysicianLoginActivity.class);
+                Intent physicianSignInIntent = new Intent(this, PatientActivity.class);
                 startActivity(physicianSignInIntent);
                 break;
             case R.id.admin_menu_button:

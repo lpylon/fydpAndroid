@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Fragments.PatientInfoFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/gray"
+        android:orientation="vertical">
+
+
+        <LinearLayout
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@color/white">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
+            android:layout_marginLeft="16dp"
+            android:textSize="16sp"
+            android:text="Name:"
+            android:textColor="@color/colorPrimary"
+            android:background="@color/white"
+            />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="4dp"
+                android:layout_marginLeft="6dp"
+                android:textSize="16sp"
+                android:fontFamily="@font/roboto_light"
+                android:text="Patient Name"
+                android:textColor="@color/colorPrimary"
+                android:background="@color/white"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@color/white">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
+            android:layout_marginLeft="16dp"
+            android:textSize="16sp"
+            android:text="Phone Number:"
+            android:textColor="@color/colorPrimary"
+            android:background="@color/white"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
+            android:layout_marginLeft="6dp"
+            android:textSize="16sp"
+            android:fontFamily="@font/roboto_light"
+            android:text="Patient Phone Number"
+            android:textColor="@color/colorPrimary"
+            android:background="@color/white"
+            />
+
+    </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@color/white">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="4dp"
+                android:layout_marginLeft="16dp"
+                android:textSize="16sp"
+                android:text="Date of Birth:"
+                android:textColor="@color/colorPrimary"
+                android:background="@color/white"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="4dp"
+                android:layout_marginLeft="6dp"
+                android:textSize="16sp"
+                android:text="Patient DOB"
+                android:fontFamily="@font/roboto_light"
+                android:textColor="@color/colorPrimary"
+                android:background="@color/white"
+                />
+
+        </LinearLayout>
+
+
+        <Button
+            android:id="@+id/take_video_button"
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="25dp"
+            android:layout_marginBottom="25dp"
+            android:layout_marginRight="25dp"
+            android:background="@color/colorAccent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:drawableTop="@drawable/rough_patient_list_logo"
+            android:text="New Video"/>
+
+
+        <Button
+            android:layout_marginLeft="25dp"
+            android:layout_marginBottom="25dp"
+            android:layout_marginRight="25dp"
+            android:background="@color/colorAccent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:drawableTop="@drawable/rough_patient_list_logo"
+            android:text="Review Existing Photos"/>
+
+
+    </LinearLayout>
+
+</FrameLayout>

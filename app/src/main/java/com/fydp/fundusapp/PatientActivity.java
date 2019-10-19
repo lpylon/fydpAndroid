@@ -11,18 +11,22 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 
 import com.fydp.fundusapp.Fragments.NewPatientFragment;
 import com.fydp.fundusapp.Fragments.NoPatientSignedInFragment;
+import com.fydp.fundusapp.Fragments.PatientInfoFragment;
 import com.fydp.fundusapp.Fragments.PatientListFragment;
 import com.fydp.fundusapp.Fragments.PhysicianInfoFragment;
 
 public class PatientActivity extends AppCompatActivity
         implements NoPatientSignedInFragment.OnFragmentInteractionListener,
-        NewPatientFragment.OnFragmentInteractionListener{
+        NewPatientFragment.OnFragmentInteractionListener,
+        PatientInfoFragment.OnFragmentInteractionListener,
+        PatientListFragment.OnFragmentInteractionListener{
         //implements NavigationView.OnNavigationItemSelectedListener {
 
     boolean patientSignedIn = true;
@@ -98,7 +102,12 @@ public class PatientActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-                //if (getFragmentManager().getBackStackEntryCount() > 0) { //TODO look at backpress logic
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            Log.i("LAUREL", String.valueOf(fragmentManager.getFragments().size()));
+            Log.i("LAUREL", String.valueOf(fragmentManager.getFragments().get(0)));
+
+
+            //if (getFragmentManager().getBackStackEntryCount() > 0) { //TODO look at backpress logic
                 //    getFragmentManager().popBackStack();
                 //} else {
                  //   super.onBackPressed();
@@ -198,6 +207,7 @@ public class PatientActivity extends AppCompatActivity
     public void onFragmentInteraction() {
 
     }
+
 
 
 

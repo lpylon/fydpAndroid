@@ -6,40 +6,68 @@
     tools:context=".Fragments.NewPatientFragment">
 
     <LinearLayout
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/gray"
         android:orientation="vertical">
 
-    <EditText android:id="@+id/firstname"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="0dp"
-        android:layout_marginRight="15dp"
-        android:layout_centerVertical="true"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:gravity="center"
-        android:hint="First Name"
-        android:inputType="text"
-        />
+        <android.support.design.widget.TextInputLayout
+            android:layout_marginTop="15dp"
+            android:layout_width="match_parent"
+            android:layout_marginRight="25dp"
+            android:layout_marginLeft="25dp"
+            android:layout_height="wrap_content"
+            >
+
+            <EditText android:id="@+id/firstname"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="0dp"
+                android:layout_centerVertical="true"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:gravity="center"
+                android:hint="First Name"
+                android:inputType="text"
+                android:background="@color/white"
+                />
+
+        </android.support.design.widget.TextInputLayout>
+
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_marginRight="25dp"
+            android:layout_marginLeft="25dp"
+            android:layout_height="wrap_content"
+            >
 
     <EditText android:id="@+id/lastname"
-        android:layout_marginLeft="15dp"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="0dp"
-        android:layout_marginRight="15dp"
         android:layout_centerVertical="true"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:gravity="center"
         android:hint="Last Name"
+        android:background="@color/white"
          />
 
-    <EditText android:id="@+id/phonenumber"
-        android:layout_marginLeft="15dp"
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_marginRight="25dp"
+            android:layout_marginLeft="25dp"
+            android:layout_height="wrap_content"
+            >
+
+        <EditText android:id="@+id/phonenumber"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="0dp"
-        android:layout_marginRight="15dp"
         android:layout_centerVertical="true"
         android:layout_width="match_parent"
         android:layout_height="50dp"
@@ -49,34 +77,52 @@
         android:singleLine="true"
         android:imeOptions="actionNext"
         android:inputType="phone"
-     />
+            android:background="@color/white"
 
-    <EditText android:id="@+id/birthyear"
-        android:layout_marginLeft="15dp"
+            />
+
+        </android.support.design.widget.TextInputLayout>
+
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_marginTop="10dp"
+
+            android:layout_width="match_parent"
+            android:layout_marginRight="25dp"
+            android:layout_marginLeft="25dp"
+            android:layout_height="wrap_content"
+            >
+
+        <EditText android:id="@+id/birthyear"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="0dp"
-        android:layout_marginRight="15dp"
         android:layout_centerVertical="true"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:gravity="center"
         android:hint="Date Of Birth"
         android:inputType="phone"
-        />
+            android:background="@color/white"
+
+            />
+
+        </android.support.design.widget.TextInputLayout>
 
 
 
-    <Button android:id="@+id/register"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="10dp"
+
+        <Button android:id="@+id/register"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="20dp"
         android:layout_marginBottom="10dp"
-        android:layout_marginRight="15dp"
+        android:layout_marginRight="25dp"
         android:layout_centerVertical="true"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:gravity="center"
         android:text="Register New Patient"
         android:layout_alignParentBottom="true"
+        android:background="@color/colorAccent"
         android:textSize="18sp" />
 
 </LinearLayout>
