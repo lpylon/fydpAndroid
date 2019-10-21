@@ -13,6 +13,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public static final String SHARED_PREFS_PATIENT = "patient_shared_prefs";
     public static final String SHARED_PREFS_PHYSICIAN = "physician_shared_prefs";
+    public static final String PATIENT_ID = "patient_id";
+    public static final String PHYSICIAN_ID = "physician_id";
 
     Button physicianSignIn;
     Button administratorMenu;

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import com.fydp.fundusapp.Objects.Patient;
 
@@ -68,6 +69,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
+        values.put(PATIENT_ID, patient.getPatientId());
         values.put(PATIENT_FIRST_NAME, patient.getFirstName());
         values.put(PATIENT_LAST_NAME, patient.getLastName());
         values.put(PATIENT_DATE_OF_BIRTH, patient.getDateOfBirth());
@@ -77,7 +79,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
     }
 
-    public List<Patient> getallusers() {
+    public List<Patient> getAllPatients() {
         List<Patient> userList = new ArrayList<>();
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.rawQuery("select " + PATIENT_ID + ", " + PATIENT_FIRST_NAME + ", " + PATIENT_LAST_NAME + ", " + PHONE_NUMBER + ", " + PATIENT_DATE_OF_BIRTH  + " from " + TABLE_PATIENTS + " ORDER BY " + PATIENT_FIRST_NAME + " ASC ", null);
@@ -98,6 +100,29 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         cursor.close();
         db.close();
         return userList;
+    }
+
+
+    public Patient getPatient(String patientId){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String selection = PATIENT_ID + " = ?";
+
+        String[] columns = {PATIENT_FIRST_NAME, PATIENT_LAST_NAME, PHONE_NUMBER, PATIENT_DATE_OF_BIRTH};
+        String[] selectionArgs = {patientId};
+
+        Patient patient = null;
+        Cursor cursor = db.query(TABLE_PATIENTS, columns, selection, selectionArgs, null, null, null);
+        if (cursor.moveToFirst()) { //TODO make sure only one result appears
+                String firstName = cursor.getString(0);
+                Log.i("LAUREL", firstName);
+                String lastName = cursor.getString(1);
+                String phoneNumber = cursor.getString(3);
+                String dateOfBirth = cursor.getString(2);
+                patient = new Patient(patientId, firstName, lastName, phoneNumber, dateOfBirth);
+        }
+        db.close();
+        cursor.close();
+        return patient;
     }
 
 

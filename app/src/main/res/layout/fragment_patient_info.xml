@@ -34,6 +34,7 @@
             />
 
             <TextView
+                android:id="@+id/patient_name"
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
                 android:layout_marginTop="4dp"
@@ -69,6 +70,7 @@
             />
 
         <TextView
+            android:id="@+id/phone_number"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
             android:layout_marginTop="4dp"
@@ -104,6 +106,7 @@
                 />
 
             <TextView
+                android:id="@+id/dob"
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
                 android:layout_marginTop="4dp"
@@ -129,7 +132,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="10dp"
-            android:drawableTop="@drawable/rough_patient_list_logo"
+            android:drawableTop="@drawable/rough_take_video_image"
             android:text="New Video"/>
 
 
@@ -141,7 +144,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="10dp"
-            android:drawableTop="@drawable/rough_patient_list_logo"
+            android:drawableTop="@drawable/rough_review_images_logo"
             android:text="Review Existing Photos"/>
 
 

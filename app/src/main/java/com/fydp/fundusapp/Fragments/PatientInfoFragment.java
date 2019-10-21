@@ -2,6 +2,7 @@ package com.fydp.fundusapp.Fragments;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,7 +11,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
+import com.fydp.fundusapp.DatabaseHelper;
+import com.fydp.fundusapp.MainActivity;
+import com.fydp.fundusapp.Objects.Patient;
 import com.fydp.fundusapp.R;
 import com.fydp.fundusapp.VideoActivity;
 
@@ -36,24 +42,17 @@ public class PatientInfoFragment extends Fragment {
 
     private Button newVideoButton;
 
-    public PatientInfoFragment() {
-        // Required empty public constructor
-    }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment PatientInfoFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static PatientInfoFragment newInstance(String param1, String param2) {
+    private Patient currentPatient;
+    private TextView patientNameEditText;
+    private TextView patientPhoneNumberEditText;
+    private TextView patientDOBEdiitText;
+
+    public PatientInfoFragment() { }
+
+    public static PatientInfoFragment newInstance() {
         PatientInfoFragment fragment = new PatientInfoFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -61,17 +60,28 @@ public class PatientInfoFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+        SharedPreferences prefs = getActivity().getApplicationContext().getSharedPreferences(
+                MainActivity.SHARED_PREFS_PATIENT, Context.MODE_PRIVATE);
+        String patientId = prefs.getString(MainActivity.PATIENT_ID, "");
+        DatabaseHelper databaseHelper = new DatabaseHelper(getActivity().getApplicationContext());//TOdo probably save this context
+        currentPatient = databaseHelper.getPatient(patientId);
+
         View view = inflater.inflate(R.layout.fragment_patient_info, container, false);
+        patientNameEditText = view.findViewById(R.id.patient_name);
+        patientPhoneNumberEditText = view.findViewById(R.id.phone_number);
+        patientDOBEdiitText = view.findViewById(R.id.dob);
+
+        if(currentPatient!=null) {
+            patientNameEditText.setText(currentPatient.getFirstName() + " " + currentPatient.getLastName());
+            patientPhoneNumberEditText.setText(currentPatient.getPhoneNumber());
+            patientDOBEdiitText.setText(currentPatient.getDateOfBirth());
+        }
+
         newVideoButton = view.findViewById(R.id.take_video_button);
         newVideoButton.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -1,5 +1,6 @@
 package com.fydp.fundusapp;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Button;
@@ -16,8 +17,16 @@ public class ProcessVideoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_process_video);
 
+        Intent intent = getIntent();
+        videoPath = intent.getStringExtra("video_path");
 
-        //TODO call video stitching thingy
+        processImage();
+
+
+    }
+
+    private void processImage() {
+
 
     }
 }

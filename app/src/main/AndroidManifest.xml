@@ -45,8 +45,11 @@
             android:label="@string/title_activity_physician_login" />
         <activity
             android:name=".VideoReviewActivity"
-            android:label="Video Review"></activity>
-        <activity android:name=".ProcessVideoActivity"></activity>
+            android:label="Video Review"/>
+        <activity
+            android:name=".ProcessVideoActivity"
+            android:label="Process Image"/>
+
     </application>
 
 </manifest>

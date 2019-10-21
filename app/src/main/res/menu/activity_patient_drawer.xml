@@ -17,11 +17,11 @@
 
     <group  android:checkableBehavior="single">
 
-    <item android:title="Physicians">
+    <item android:title="Physician">
         <menu>
             <item
                 android:id="@+id/nav_log_out"
-                android:icon="@drawable/ic_menu_gallery"
+                android:icon="@drawable/rough_logout_logo"
                 android:title="Log Out" />
             <item
                 android:id="@+id/nav_physician_info"
@@ -34,15 +34,15 @@
         <menu>
             <item
                 android:id="@+id/nav_patient_list"
-                android:icon="@drawable/ic_menu_share"
+                android:icon="@drawable/rough_patient_list_logo"
                 android:title="Patient List" />
             <item
                 android:id="@+id/nav_new_patient"
-                android:icon="@drawable/ic_menu_share"
+                android:icon="@drawable/rough_add_patient_logo"
                 android:title="New Patient" />
             <item
                 android:id="@+id/nav_patient_log_out"
-                android:icon="@drawable/ic_menu_share"
+                android:icon="@drawable/rough_logout_logo"
                 android:title="Patient Log Out" />
         </menu>
     </item>

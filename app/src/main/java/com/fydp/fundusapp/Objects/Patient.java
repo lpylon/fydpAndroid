@@ -8,12 +8,14 @@ public class Patient {
     private String dateOfBirth;
     private String phoneNumber;
 
+    /*
     public Patient(String firstName, String lastName, String dateOfBirth, String phoneNumber){
         this.firstName = firstName;
         this.lastName = lastName;
         this.dateOfBirth = dateOfBirth;
         this.phoneNumber = phoneNumber;
     }
+    */
 
     public Patient(String patientId, String firstName, String lastName, String dateOfBirth, String phoneNumber){
         this.patientId = patientId;

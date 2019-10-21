@@ -1,9 +1,7 @@
 package com.fydp.fundusapp.Fragments;
 
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.Typeface;
-import android.net.Uri;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -17,6 +15,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.fydp.fundusapp.DatabaseHelper;
+import com.fydp.fundusapp.MainActivity;
 import com.fydp.fundusapp.Objects.Patient;
 import com.fydp.fundusapp.R;
 
@@ -82,7 +81,7 @@ public class PatientListFragment extends Fragment {
 
         DatabaseHelper databaseHelper = new DatabaseHelper(getActivity().getApplicationContext());
 
-        final List<Patient> patients = databaseHelper.getallusers();
+        final List<Patient> patients = databaseHelper.getAllPatients();
         ArrayAdapter arrayAdapter = new ArrayAdapter<Patient>(getActivity().getApplicationContext(), android.R.layout.simple_expandable_list_item_1, patients){
             @Override
             public View getView(int position, View convertView,  ViewGroup parent){
@@ -98,6 +97,11 @@ public class PatientListFragment extends Fragment {
         listView.setAdapter(arrayAdapter);
         listView.setOnItemClickListener((parent, view, position, id) -> {
             Patient patient = patients.get(position);
+
+            SharedPreferences.Editor editor = getActivity().getApplicationContext().getSharedPreferences(
+                    MainActivity.SHARED_PREFS_PATIENT, Context.MODE_PRIVATE).edit();
+            editor.putString(MainActivity.PATIENT_ID, patient.getPatientId());
+            editor.apply();
 
             mListener.onFragmentInteraction();
             FragmentTransaction fragmentTransaction = getActivity()

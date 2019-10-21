@@ -1,6 +1,7 @@
 package com.fydp.fundusapp.Fragments;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -12,8 +13,11 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.fydp.fundusapp.DatabaseHelper;
+import com.fydp.fundusapp.MainActivity;
 import com.fydp.fundusapp.Objects.Patient;
 import com.fydp.fundusapp.R;
+
+import java.util.UUID;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -95,7 +99,9 @@ public class NewPatientFragment extends Fragment {
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(View view) {
         if (mListener != null) {
-            Patient patient = new Patient(firstName.getEditableText().toString(),
+            Patient patient = new Patient(
+                    UUID.randomUUID().toString(),
+                    firstName.getEditableText().toString(),
                     lastName.getEditableText().toString(),
                     dateOfBirth.getEditableText().toString(),
                     phoneNumber.getEditableText().toString());
@@ -103,8 +109,10 @@ public class NewPatientFragment extends Fragment {
             DatabaseHelper databaseHelper = new DatabaseHelper(getActivity().getApplicationContext());
             databaseHelper.addNewPatient(patient);
 
-            //TODO add patient to database
-            //TODO open patient fragment
+            SharedPreferences.Editor editor = getActivity().getApplicationContext().getSharedPreferences(
+                    MainActivity.SHARED_PREFS_PATIENT, Context.MODE_PRIVATE).edit();
+            editor.putString(MainActivity.PATIENT_ID, patient.getPatientId());
+            editor.apply();
 
 
             mListener.onFragmentInteraction();
