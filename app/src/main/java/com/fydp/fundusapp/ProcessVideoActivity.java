@@ -6,6 +6,9 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import org.opencv.core.Core;
+import org.opencv.imgproc.Imgproc;
+
 
 public class ProcessVideoActivity extends AppCompatActivity {
 
@@ -21,11 +24,10 @@ public class ProcessVideoActivity extends AppCompatActivity {
         videoPath = intent.getStringExtra("video_path");
 
         processImage();
-
-
     }
 
     private void processImage() {
+
 
 
     }

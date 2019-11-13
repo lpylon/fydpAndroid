@@ -1,0 +1,4 @@
+#Wed Nov 13 10:32:20 EST 2019
+base.0=/Users/laurelpilon/FYDP/fydpAndroid/OpenCV/build/intermediates/transforms/dexMerger/release/0
+path.0=classes.dex
+renamed.0=classes.dex

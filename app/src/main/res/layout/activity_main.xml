@@ -18,8 +18,10 @@
 
         <ImageView
             android:layout_width="wrap_content"
+            android:layout_marginLeft="25dp"
+            android:layout_marginRight="25dp"
             android:layout_height="170dp"
-            android:src="@drawable/rough_logo"
+            android:src="@drawable/oculus_logo"
             android:layout_gravity="center"
             android:layout_marginTop="80dp"
             android:layout_marginBottom="60dp"

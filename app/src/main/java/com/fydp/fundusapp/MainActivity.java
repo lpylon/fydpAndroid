@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
+import org.opencv.core.Core;
+
 
 import com.fydp.fundusapp.Objects.Patient;
 

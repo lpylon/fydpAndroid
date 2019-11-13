@@ -151,6 +151,8 @@ public class VideoActivity extends AppCompatActivity implements SurfaceHolder.Ca
     @RequiresApi(api = Build.VERSION_CODES.O)
     private boolean prepareForVideoRecording(){
         camera.unlock();
+
+
         mediaRecorder = new MediaRecorder();
         mediaRecorder.setCamera(camera);
        // mediaRecorder.setAudioSource(MediaRecorder.AudioSource.CAMCORDER);
@@ -211,8 +213,11 @@ public class VideoActivity extends AppCompatActivity implements SurfaceHolder.Ca
         parameters = camera.getParameters();
        // parameters.setPreviewSize(150, 200);
         parameters.setPreviewFrameRate(20);
+        parameters.setRotation(90);
+        parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE);
         camera.setParameters(parameters);
         camera.setDisplayOrientation(90);
+
 
         try{
             camera.setPreviewDisplay(surfaceHolder);
