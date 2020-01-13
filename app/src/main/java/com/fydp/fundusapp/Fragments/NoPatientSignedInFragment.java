@@ -72,6 +72,7 @@ public class NoPatientSignedInFragment extends Fragment   {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        getActivity().setTitle("Patient Menu");
         View view = inflater.inflate(R.layout.fragment_no_patient_signed_in, container, false);
 
         patientSearchButton = view.findViewById(R.id.patient_list_button);
@@ -107,8 +108,8 @@ public class NoPatientSignedInFragment extends Fragment   {
             mListener.onFragmentInteraction();
             FragmentTransaction fragmentTransaction = getActivity()
                     .getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.patient_content, nextFragment);
-            fragmentTransaction.commit();
+            fragmentTransaction.replace(R.id.patient_content, nextFragment).addToBackStack( "tag" ).commit();;
+            //fragmentTransaction.commit();
         }
     }
     @Override

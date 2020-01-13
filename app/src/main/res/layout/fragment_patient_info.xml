@@ -125,21 +125,21 @@
         <Button
             android:id="@+id/take_video_button"
             android:layout_marginTop="30dp"
-            android:layout_marginLeft="25dp"
+            android:layout_marginLeft="15dp"
             android:layout_marginBottom="25dp"
-            android:layout_marginRight="25dp"
+            android:layout_marginRight="15dp"
             android:background="@color/colorAccent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="10dp"
             android:drawableTop="@drawable/rough_take_video_image"
-            android:text="New Video"/>
+            android:text="New Exam"/>
 
 
         <Button
-            android:layout_marginLeft="25dp"
+            android:layout_marginLeft="15dp"
             android:layout_marginBottom="25dp"
-            android:layout_marginRight="25dp"
+            android:layout_marginRight="15dp"
             android:background="@color/colorAccent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

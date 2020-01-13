@@ -1,5 +1,7 @@
 package com.fydp.fundusapp;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -14,6 +16,8 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 
 import com.fydp.fundusapp.Fragments.NewPatientFragment;
@@ -31,7 +35,7 @@ public class PatientActivity extends AppCompatActivity
 
     boolean patientSignedIn = true;
 
-    Button takeAVideoButton;
+    DrawerLayout drawer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,11 +79,33 @@ public class PatientActivity extends AppCompatActivity
         });
         */
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
+        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        //ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+        //        this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+
+        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close) {
+
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                // Code here will be triggered once the drawer closes as we dont want anything to happen so we leave this blank
+                super.onDrawerClosed(drawerView);
+                InputMethodManager inputMethodManager = (InputMethodManager)
+                        getSystemService(Context.INPUT_METHOD_SERVICE);
+                inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+            }
+
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                // Code here will be triggered once the drawer open as we dont want anything to happen so we leave this blank
+                super.onDrawerOpened(drawerView);
+                InputMethodManager inputMethodManager = (InputMethodManager)
+                        getSystemService(Context.INPUT_METHOD_SERVICE);
+                inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+            }
+        };
+
+        drawer.addDrawerListener(actionBarDrawerToggle);
+        actionBarDrawerToggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         //navigationView.setNavigationItemSelectedListener(this);
@@ -96,24 +122,29 @@ public class PatientActivity extends AppCompatActivity
         }
     }
 
+
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        } else {
+        }
+
+        else {
             FragmentManager fragmentManager = getSupportFragmentManager();
             Log.i("LAUREL", String.valueOf(fragmentManager.getFragments().size()));
             Log.i("LAUREL", String.valueOf(fragmentManager.getFragments().get(0)));
 
 
-            //if (getFragmentManager().getBackStackEntryCount() > 0) { //TODO look at backpress logic
-                //    getFragmentManager().popBackStack();
-                //} else {
-                 //   super.onBackPressed();
-                //}
+            if (getFragmentManager().getBackStackEntryCount() > 0) { //TODO look at backpress logic
+                getFragmentManager().popBackStack();
+
+            } else {
+                   super.onBackPressed();//TODO decide if this should log person out
+            }
         }
     }
+
 
 
 
@@ -127,6 +158,9 @@ public class PatientActivity extends AppCompatActivity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
+        InputMethodManager inputMethodManager = (InputMethodManager)  this.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(), 0);
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
@@ -191,10 +225,11 @@ public class PatientActivity extends AppCompatActivity
 
         // Insert the fragment by replacing any existing fragment
         FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.patient_content, fragment).commit();
+        fragmentManager.beginTransaction().replace(R.id.patient_content, fragment).addToBackStack( "tag" ).commit();
 
         // Highlight the selected item has been done by NavigationView
-        menuItem.setChecked(true);
+
+        //menuItem.setChecked(true);
         // Set action bar title
         setTitle(menuItem.getTitle());
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

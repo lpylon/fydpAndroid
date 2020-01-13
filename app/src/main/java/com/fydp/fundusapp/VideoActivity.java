@@ -1,6 +1,8 @@
 package com.fydp.fundusapp;
 
 import android.Manifest;
+import android.annotation.TargetApi;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -66,12 +68,14 @@ public class VideoActivity extends AppCompatActivity implements SurfaceHolder.Ca
     private SurfaceView surfaceView;
     private SurfaceHolder surfaceHolder;
     private Camera camera;
+    private Camera.Parameters parameters;
     private MediaRecorder mediaRecorder;
     private boolean isRecording = false;
     private File file;
 
     private static final int MEDIA_TYPE_VIDEO = 3;
 
+    @TargetApi(Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,6 +87,19 @@ public class VideoActivity extends AppCompatActivity implements SurfaceHolder.Ca
         surfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
         surfaceHolder.addCallback((SurfaceHolder.Callback) this);
 
+        /*
+        CameraManager camManager = (CameraManager) getSystemService(Context.CAMERA_SERVICE);
+        String cameraId = null; // Usually front camera is at 0 position.
+        try {
+            cameraId = camManager.getCameraIdList()[0];
+            camManager.setTorchMode(cameraId, true);
+
+        } catch (CameraAccessException e) {
+            e.printStackTrace();
+        }
+        */
+
+
         recordButton.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
@@ -90,6 +107,8 @@ public class VideoActivity extends AppCompatActivity implements SurfaceHolder.Ca
                 if(isRecording){
                     mediaRecorder.stop();
                     releaseMediaRecorder();
+                    parameters.setFlashMode(Camera.Parameters.FLASH_MODE_OFF);
+                    camera.setParameters(parameters);
                     camera.lock();
                     recordButton.setText("Start Video");
                     isRecording = false;
@@ -104,14 +123,24 @@ public class VideoActivity extends AppCompatActivity implements SurfaceHolder.Ca
                     //Pass video
 
                 } else {
+
+
                     if(prepareForVideoRecording()){
+
+
                         mediaRecorder.start();
+
+                        camera.lock();
+                        parameters.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
+                        camera.setParameters(parameters);
+                        //camera.unlock();
                         recordButton.setText("Stop Video");
                         isRecording = true;
                     }
                 }
             }
         });
+
     }
 
 
@@ -129,14 +158,18 @@ public class VideoActivity extends AppCompatActivity implements SurfaceHolder.Ca
                         Intent reviewVideoIntent = new Intent(getApplicationContext(), VideoReviewActivity.class);
                         //TODO add video location path to intent
                         reviewVideoIntent.putExtra("video_path",file.getAbsoluteFile().toString());
-                        startActivity(reviewVideoIntent);
+                        startActivityForResult(reviewVideoIntent, 0);
                     }
                 });
 
         builder1.setNegativeButton(
                 "No, retake video.",
                 new DialogInterface.OnClickListener() {
+
                     public void onClick(DialogInterface dialog, int id) {
+                        camera.lock();
+                        //parameters.setFlashMode(Camera.Parameters.FLASH_MODE_ON);
+                       // camera.setParameters(parameters);
                         dialog.cancel();
                         //TODO delete the previous video
                     }
@@ -165,6 +198,7 @@ public class VideoActivity extends AppCompatActivity implements SurfaceHolder.Ca
         mediaRecorder.setOutputFile(String.valueOf(getOutputFile(MEDIA_TYPE_VIDEO).getAbsolutePath()));
         mediaRecorder.setPreviewDisplay(surfaceHolder.getSurface());
 //        mediaRecorder.setVideoSize(1920,1080);
+
 
         try{
             mediaRecorder.prepare();
@@ -202,6 +236,22 @@ public class VideoActivity extends AppCompatActivity implements SurfaceHolder.Ca
             return null;
         }
     }
+
+    public void flash(View view) {
+        if(!isRecording) {
+            camera.lock();
+        }
+
+        Camera.Parameters parameters = camera.getParameters();
+        //parameters.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
+        //camera.setParameters(parameters);
+
+        if(!isRecording) {
+            camera.unlock();
+        }
+    }
+
+
     @Override
     public void surfaceCreated(SurfaceHolder surfaceHolder) {
         try{
@@ -209,15 +259,14 @@ public class VideoActivity extends AppCompatActivity implements SurfaceHolder.Ca
         } catch (Exception e){
 
         }
-        Camera.Parameters parameters;
         parameters = camera.getParameters();
        // parameters.setPreviewSize(150, 200);
         parameters.setPreviewFrameRate(20);
-        parameters.setRotation(90);
+       // parameters.setRotation(90);
         parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE);
+        parameters.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
         camera.setParameters(parameters);
         camera.setDisplayOrientation(90);
-
 
         try{
             camera.setPreviewDisplay(surfaceHolder);
@@ -234,6 +283,25 @@ public class VideoActivity extends AppCompatActivity implements SurfaceHolder.Ca
 
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        parameters.setFlashMode(Camera.Parameters.FLASH_MODE_OFF);
+        camera.setParameters(parameters);
+        camera.lock();
+        super.onBackPressed();
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Intent returnIntent = new Intent(this, EyeExamActivity.class);
+        //returnIntent.putExtra("result",videoPath);
+        setResult(Activity.RESULT_OK, returnIntent);
+        //startActivity()
+        finish();
 
     }
 

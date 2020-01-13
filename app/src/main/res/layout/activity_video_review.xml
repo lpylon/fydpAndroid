@@ -13,23 +13,48 @@
         android:orientation="vertical"
         android:background="@color/gray">
 
-        <VideoView
+
+        <!--TextureView
+            android:id="@+id/playback_video"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:rotation="90" /-->
+
+        <!--VideoView
             android:layout_margin="20dp"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            android:id="@+id/VideoView" />
+            android:id="@+id/VideoView" /-->
+
+        <com.warnyul.android.widget.FastVideoView
+            android:layout_marginTop="50dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:rotation="45"
+            android:id="@+id/video2"
+            android:foregroundGravity="center"
+            android:layout_centerHorizontal="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+
+
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
         android:orientation="horizontal"
-        android:layout_margin="20dp"
+        android:layout_marginRight="37dp"
+        android:layout_marginLeft="37dp"
         android:layout_gravity="center">
 
         <Button
             android:id="@+id/retake_button"
             android:padding="10dp"
-            android:layout_margin="10dp"
+            android:layout_gravity="left"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Retake"
@@ -40,10 +65,11 @@
         <Button
             android:id="@+id/process_button"
             android:padding="10dp"
-            android:layout_margin="10dp"
+            android:layout_marginLeft="115dp"
+            android:layout_gravity="right"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Accept and Process"
+            android:text="Accept"
             android:background="@color/colorAccent"
             android:textColor="@color/colorPrimary"/>
 

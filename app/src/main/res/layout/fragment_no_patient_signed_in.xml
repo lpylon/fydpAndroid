@@ -44,7 +44,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="10dp"
-            android:drawableTop="@drawable/rough_add_patient_logo"
+            android:drawableTop="@drawable/new_patient_icon"
             android:text="Create New Patient"/>
     </LinearLayout>
 

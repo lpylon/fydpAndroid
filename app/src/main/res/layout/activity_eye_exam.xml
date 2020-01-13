@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".EyeExamActivity">
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/gray"
+        android:orientation="vertical">
+
+
+        <LinearLayout
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@color/white">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="4dp"
+                android:layout_marginLeft="16dp"
+                android:textSize="16sp"
+                android:text="Name:"
+                android:textColor="@color/colorPrimary"
+                android:background="@color/white"
+                />
+
+            <TextView
+                android:id="@+id/patient_name"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="4dp"
+                android:layout_marginLeft="6dp"
+                android:textSize="16sp"
+                android:fontFamily="@font/roboto_light"
+                android:text="Patient Name"
+                android:textColor="@color/colorPrimary"
+                android:background="@color/white"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@color/white">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="4dp"
+                android:layout_marginLeft="16dp"
+                android:textSize="16sp"
+                android:text="Phone Number:"
+                android:textColor="@color/colorPrimary"
+                android:background="@color/white"
+                />
+
+            <TextView
+                android:id="@+id/phone_number"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="4dp"
+                android:layout_marginLeft="6dp"
+                android:textSize="16sp"
+                android:fontFamily="@font/roboto_light"
+                android:text="Patient Phone Number"
+                android:textColor="@color/colorPrimary"
+                android:background="@color/white"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@color/white">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="4dp"
+                android:layout_marginLeft="16dp"
+                android:textSize="16sp"
+                android:text="Date of Birth:"
+                android:textColor="@color/colorPrimary"
+                android:background="@color/white"
+                />
+
+            <TextView
+                android:id="@+id/dob"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="4dp"
+                android:layout_marginLeft="6dp"
+                android:textSize="16sp"
+                android:text="Patient DOB"
+                android:fontFamily="@font/roboto_light"
+                android:textColor="@color/colorPrimary"
+                android:background="@color/white"
+                />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginLeft="16dp"
+            android:textSize="18sp"
+            android:text="Right Eye:"
+            android:textColor="@color/colorPrimary"
+            />
+
+        <LinearLayout
+            android:layout_marginLeft="35dp"
+            android:layout_marginRight="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_gravity="center"
+                >
+
+            <ImageButton
+                android:id="@+id/right_optic_nerve"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/new_image_rough"
+                android:layout_gravity="center"
+                android:gravity="center"
+
+                />
+
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="4dp"
+                    android:textSize="15sp"
+                    android:text="Optic Nerve"
+                    android:textColor="@color/colorPrimary"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:fontFamily="@font/roboto_light"
+
+
+                    />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginLeft="55dp"
+                android:layout_marginRight="15dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_gravity="center"
+                android:gravity="center"
+
+                >
+
+                <ImageButton
+                    android:id="@+id/right_macula"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/new_image_rough"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+
+
+                    />
+
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="15sp"
+                    android:text="Macula"
+                    android:textColor="@color/colorPrimary"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:fontFamily="@font/roboto_light"
+
+
+                    />
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="5dp"
+            android:textSize="18sp"
+            android:text="Left Eye:"
+            android:textColor="@color/colorPrimary"
+            />
+
+        <LinearLayout
+            android:layout_marginLeft="35dp"
+            android:layout_marginRight="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_gravity="center"
+                >
+
+                <ImageButton
+                    android:id="@+id/left_optic_nerve"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/new_image_rough"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+
+                    />
+
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="15sp"
+                    android:text="Optic Nerve"
+                    android:textColor="@color/colorPrimary"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:fontFamily="@font/roboto_light"
+
+
+
+                    />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginLeft="55dp"
+                android:layout_marginRight="15dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+
+
+                >
+
+                <ImageButton
+                    android:id="@+id/left_macula"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/new_image_rough"
+                    android:gravity="center"
+
+                    />
+
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="15sp"
+                    android:text="Macula"
+                    android:textColor="@color/colorPrimary"
+                    android:gravity="center"
+                    android:fontFamily="@font/roboto_light"
+
+
+                    />
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/process"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginBottom="0dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="15dp"
+            android:gravity="center"
+            android:layout_alignParentBottom="true"
+            android:textSize="16sp"
+            android:text="Process Images"
+            android:background="@color/colorAccent"
+            />
+
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>

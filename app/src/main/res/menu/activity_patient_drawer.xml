@@ -17,7 +17,7 @@
 
     <group  android:checkableBehavior="single">
 
-    <item android:title="Physician">
+    <item android:title="Operator">
         <menu>
             <item
                 android:id="@+id/nav_log_out"
@@ -26,7 +26,7 @@
             <item
                 android:id="@+id/nav_physician_info"
                 android:icon="@drawable/ic_menu_gallery"
-                android:title="Physician Info" />
+                android:title="Operator Info" />
         </menu>
     </item>
 
@@ -38,7 +38,7 @@
                 android:title="Patient List" />
             <item
                 android:id="@+id/nav_new_patient"
-                android:icon="@drawable/rough_add_patient_logo"
+                android:icon="@drawable/new_patient_icon"
                 android:title="New Patient" />
             <item
                 android:id="@+id/nav_patient_log_out"

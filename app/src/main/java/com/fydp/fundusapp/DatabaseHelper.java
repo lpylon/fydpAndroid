@@ -102,6 +102,50 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return userList;
     }
 
+    public List<Patient> getSearchedPatient(String searchstring) {
+        List<Patient> userList = new ArrayList<>();
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery("select " + PATIENT_ID + ", " + PATIENT_FIRST_NAME + ", " + PATIENT_LAST_NAME + ", " + PHONE_NUMBER + ", " + PATIENT_DATE_OF_BIRTH  + " from " + TABLE_PATIENTS + " Where " + PATIENT_ID + "  like '%" + searchstring + "%' OR " + PATIENT_FIRST_NAME + "  like '%" + searchstring + "%' OR " + PHONE_NUMBER + "  like '%" + searchstring + "%' OR " + PATIENT_LAST_NAME + "  like '%" + searchstring + "%' OR "  + PATIENT_FIRST_NAME + "|| ' ' || " +  PATIENT_LAST_NAME + " LIKE  '%" + searchstring +"%'"  + " ORDER BY " + PATIENT_FIRST_NAME + " ASC " , null);
+        if (cursor.moveToFirst()) {
+            do {
+                String userid = cursor.getString(0);
+                String fname = cursor.getString(1);
+                String lname = cursor.getString(2);
+                String pnumber = cursor.getString(3);
+                String byear = cursor.getString(4);
+
+                Patient patient = new Patient(userid, fname, lname, pnumber, byear);
+                userList.add(patient);
+
+
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        return userList;
+    }
+
+    public Patient getPatientByName(String firstName, String lastName){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String selection = PATIENT_FIRST_NAME + " = ? AND " + PATIENT_LAST_NAME + " = ?";
+
+        String[] columns = {PATIENT_ID, PATIENT_FIRST_NAME, PATIENT_LAST_NAME, PHONE_NUMBER, PATIENT_DATE_OF_BIRTH};
+        String[] selectionArgs = {firstName, lastName};
+
+        Patient patient = null;
+        Cursor cursor = db.query(TABLE_PATIENTS, columns, selection, selectionArgs, null, null, null);
+        if (cursor.moveToFirst()) { //TODO make sure only one result appears
+            String patientID = cursor.getString(0);
+            String firstNameString = cursor.getString(1);
+            String lastNameString = cursor.getString(2);
+            String phoneNumber = cursor.getString(3);
+            String dateOfBirth = cursor.getString(4);
+            patient = new Patient(patientID, firstNameString, lastNameString, phoneNumber, dateOfBirth);
+        }
+        db.close();
+        cursor.close();
+        return patient;
+    }
 
     public Patient getPatient(String patientId){
         SQLiteDatabase db = this.getWritableDatabase();

@@ -22,6 +22,7 @@
             >
 
             <EditText android:id="@+id/firstname"
+                android:inputType="textCapSentences"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="0dp"
                 android:layout_centerVertical="true"
@@ -29,7 +30,6 @@
                 android:layout_height="50dp"
                 android:gravity="center"
                 android:hint="First Name"
-                android:inputType="text"
                 android:background="@color/white"
                 />
 
@@ -45,6 +45,7 @@
             >
 
     <EditText android:id="@+id/lastname"
+        android:inputType="textCapSentences"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="0dp"
         android:layout_centerVertical="true"
@@ -94,14 +95,14 @@
             >
 
         <EditText android:id="@+id/birthyear"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="0dp"
-        android:layout_centerVertical="true"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:gravity="center"
-        android:hint="Date Of Birth"
-        android:inputType="phone"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="0dp"
+            android:layout_centerVertical="true"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:hint="Date Of Birth"
+            android:inputType="phone"
             android:background="@color/white"
 
             />

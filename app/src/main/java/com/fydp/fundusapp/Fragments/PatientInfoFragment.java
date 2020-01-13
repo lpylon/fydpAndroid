@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.fydp.fundusapp.DatabaseHelper;
+import com.fydp.fundusapp.EyeExamActivity;
 import com.fydp.fundusapp.MainActivity;
 import com.fydp.fundusapp.Objects.Patient;
 import com.fydp.fundusapp.R;
@@ -65,6 +66,8 @@ public class PatientInfoFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        getActivity().setTitle("Patient Information");
+
         SharedPreferences prefs = getActivity().getApplicationContext().getSharedPreferences(
                 MainActivity.SHARED_PREFS_PATIENT, Context.MODE_PRIVATE);
         String patientId = prefs.getString(MainActivity.PATIENT_ID, "");
@@ -99,7 +102,7 @@ public class PatientInfoFragment extends Fragment {
             //Fragment nextFragment = null;
             switch(view.getId()) {
                 case R.id.take_video_button:
-                    Intent takeAVideo = new Intent(getActivity().getApplicationContext(), VideoActivity.class);
+                    Intent takeAVideo = new Intent(getActivity().getApplicationContext(), EyeExamActivity.class);
                     startActivity(takeAVideo);
                     break;
             }

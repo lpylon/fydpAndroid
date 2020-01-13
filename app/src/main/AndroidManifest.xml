@@ -45,11 +45,13 @@
             android:label="@string/title_activity_physician_login" />
         <activity
             android:name=".VideoReviewActivity"
-            android:label="Video Review"/>
+            android:label="Video Review" />
         <activity
             android:name=".ProcessVideoActivity"
-            android:label="Process Image"/>
-
+            android:label="Process Image" />
+        <activity
+            android:name=".EyeExamActivity"
+            android:label="New Eye Exam"></activity>
     </application>
 
 </manifest>
