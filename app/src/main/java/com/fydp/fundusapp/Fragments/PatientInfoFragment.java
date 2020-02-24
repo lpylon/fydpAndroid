@@ -19,6 +19,7 @@ import com.fydp.fundusapp.EyeExamActivity;
 import com.fydp.fundusapp.MainActivity;
 import com.fydp.fundusapp.Objects.Patient;
 import com.fydp.fundusapp.R;
+import com.fydp.fundusapp.ReviewExistingPhotosActivity;
 import com.fydp.fundusapp.VideoActivity;
 
 /**
@@ -42,6 +43,8 @@ public class PatientInfoFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
 
     private Button newVideoButton;
+    private Button reviewExistingButton;
+
 
 
     private Patient currentPatient;
@@ -92,6 +95,14 @@ public class PatientInfoFragment extends Fragment {
                 onButtonPressed(view);
             }
         });
+
+        reviewExistingButton = view.findViewById(R.id.review_images_button);
+        reviewExistingButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onButtonPressed(view);
+            }
+        });
         return view;
     }
 
@@ -104,6 +115,11 @@ public class PatientInfoFragment extends Fragment {
                 case R.id.take_video_button:
                     Intent takeAVideo = new Intent(getActivity().getApplicationContext(), EyeExamActivity.class);
                     startActivity(takeAVideo);
+                    break;
+
+                case R.id.review_images_button:
+                    Intent reviewImages = new Intent(getActivity().getApplicationContext(), ReviewExistingPhotosActivity.class);
+                    startActivity(reviewImages);
                     break;
             }
             //mListener.onFragmentInteraction();

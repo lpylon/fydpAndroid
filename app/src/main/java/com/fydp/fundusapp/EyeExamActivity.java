@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -22,6 +23,7 @@ public class EyeExamActivity extends AppCompatActivity  implements View.OnClickL
     ImageButton leftOpticNerve;
     ImageButton leftMacula;
     Button processButton;
+    String sendPath;
 
 
     private Patient currentPatient;
@@ -88,6 +90,9 @@ public class EyeExamActivity extends AppCompatActivity  implements View.OnClickL
 
             case R.id.process:
                 Intent process = new Intent(this, ProcessVideoActivity.class);
+                Intent intent = getIntent();
+                Log.i("Intnet", "intent:" + intent.getStringExtra("result"));
+                process.putExtra("video_path", intent.getStringExtra("result"));
                 startActivity(process);
                 break;
         }
@@ -99,6 +104,11 @@ public class EyeExamActivity extends AppCompatActivity  implements View.OnClickL
         if (requestCode == 0) {
             if(resultCode == Activity.RESULT_OK){
                 rightOpticNerve.setImageResource(R.drawable.image_completed_rough);
+                Intent intent = getIntent();
+                sendPath = intent.getStringExtra("video_path");
+                Log.i("Laurel", "sendPath:" +sendPath);
+
+
                 //String result=data.getStringExtra("result");
             }
             if (resultCode == Activity.RESULT_CANCELED) {

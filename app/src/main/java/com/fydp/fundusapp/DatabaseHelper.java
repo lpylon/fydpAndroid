@@ -5,16 +5,20 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.Log;
 
+import com.fydp.fundusapp.Objects.ExamImage;
 import com.fydp.fundusapp.Objects.Patient;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
     public static final String DATABASE_NAME = "fundus.db";
 
 
@@ -32,6 +36,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String PATIENT_DATE_OF_BIRTH = "date_of_birth";
     private static final String PHONE_NUMBER = "phone_number";
 
+    private static final String TABLE_EXAM_DATA = "exam_data";
+    private static final String EXAM_ID = "exam_id";
+    private static final String EXAM_DATE = "exam_date";
+    private static final String EYE_LR = "eye_lr";
+    private static final String EYE_SECTION = "eye_section";
+    private static final String EXAMINER_ID = "examiner_id";
+    private static final String COMBINED_IMAGE = "combined_image";
+    private static final String IMAGE1 = "image1";
+    private static final String IMAGE2 = "image2";
+    private static final String IMAGE3 = "image3";
+    private static final String IMAGE4 = "image4";
+    private static final String IMAGE5 = "image5";
+
 
     private String CREATE_PHYSICIAN_TABLE = "CREATE TABLE " + TABLE_PHYSICIANS + "("
             + PHYSICIAN_ID + " TEXT PRIMARY KEY,"
@@ -48,6 +65,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + PATIENT_DATE_OF_BIRTH + " TEXT DEFAULT 0,"
             + PHONE_NUMBER + " TEXT DEFAULT 0)";
 
+    private String CREATE_EXAM_DATA_TABLE = "CREATE TABLE " + TABLE_EXAM_DATA + "("
+            + EXAM_ID + " TEXT PRIMARY KEY,"
+            + PATIENT_ID + " TEXT,"
+            + EXAM_DATE + " TEXT,"
+            + EYE_LR + " TEXT,"
+            + EYE_SECTION + " TEXT,"
+            + EXAMINER_ID + " TEXT,"
+            + COMBINED_IMAGE + " BLOB,"
+            + IMAGE1 + " BLOB,"
+            + IMAGE2 + " BLOB,"
+            + IMAGE3 + " BLOB,"
+            + IMAGE4 + " BLOB,"
+            + IMAGE5 + " BLOB)";
+
+
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -57,10 +89,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_PHYSICIAN_TABLE);
         db.execSQL(CREATE_PATIENT_TABLE);
+        db.execSQL(CREATE_EXAM_DATA_TABLE);
+
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        db.execSQL(CREATE_EXAM_DATA_TABLE);
 
     }
 
@@ -167,6 +202,69 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
         cursor.close();
         return patient;
+    }
+
+    public void saveEyeExam(ExamImage examImage){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(PATIENT_ID, examImage.getPatientId());
+        values.put(EXAM_DATE, examImage.getExamDate());
+        values.put(EYE_LR, examImage.getEyeLR());
+        values.put(EYE_SECTION, examImage.getEyeSection());
+        values.put(EXAMINER_ID, examImage.getExaminerId());
+        values.put(COMBINED_IMAGE, getBitmapAsByteArray(examImage.getCombinedImageData()));
+        values.put(IMAGE1, getBitmapAsByteArray(examImage.getImage1()));
+        values.put(IMAGE2, getBitmapAsByteArray(examImage.getImage2()));
+        values.put(IMAGE3, getBitmapAsByteArray(examImage.getImage3()));
+        values.put(IMAGE4, getBitmapAsByteArray(examImage.getImage4()));
+        values.put(IMAGE5, getBitmapAsByteArray(examImage.getImage5()));
+
+        db.insert(TABLE_EXAM_DATA, null, values);
+        db.close();
+    }
+
+    public ExamImage getExamImage(String patientId){
+        ExamImage examImage = null;
+        SQLiteDatabase db = this.getWritableDatabase();
+        String selection = PATIENT_ID + " = ?";
+
+        String[] columns = {EXAM_DATE, EYE_LR, EYE_SECTION, EXAMINER_ID, COMBINED_IMAGE, IMAGE1, IMAGE2, IMAGE3, IMAGE4, IMAGE5};
+        String[] selectionArgs = {patientId};
+
+        Cursor cursor = db.query(TABLE_EXAM_DATA, columns, selection, selectionArgs, null, null, null);
+        if (cursor.moveToFirst()) { //TODO make sure only one result appears
+            String examDate = cursor.getString(0);
+            String eyeLR = cursor.getString(1);
+            String eyeSection = cursor.getString(2);
+            String examinerId = cursor.getString(3);
+            byte[] combinedImageByte = cursor.getBlob(4);
+            byte[] image1Byte = cursor.getBlob(5);
+            byte[] image2Byte = cursor.getBlob(6);
+            byte[] image3Byte = cursor.getBlob(7);
+            byte[] image4Byte = cursor.getBlob(8);
+            byte[] image5Byte = cursor.getBlob(9);
+
+            Bitmap combinedImage = BitmapFactory.decodeByteArray(combinedImageByte, 0, combinedImageByte.length);
+            Bitmap image1 = BitmapFactory.decodeByteArray(image1Byte, 0, image1Byte.length);
+            Bitmap image2 = BitmapFactory.decodeByteArray(image2Byte, 0, image2Byte.length);
+            Bitmap image3 = BitmapFactory.decodeByteArray(image3Byte, 0, image3Byte.length);
+            Bitmap image4 = BitmapFactory.decodeByteArray(image4Byte, 0, image4Byte.length);
+            Bitmap image5 = BitmapFactory.decodeByteArray(image5Byte, 0, image5Byte.length);
+
+
+            examImage = new ExamImage(patientId, examDate, eyeLR, eyeSection, examinerId, combinedImage, image1,image2, image3, image4, image5);
+        }
+        db.close();
+        cursor.close();
+        return examImage;
+    }
+
+
+    public static byte[] getBitmapAsByteArray(Bitmap bitmap) {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 0, outputStream);
+        return outputStream.toByteArray();
     }
 
 

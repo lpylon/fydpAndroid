@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.media.MediaPlayer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.TextureView;
 import android.view.View;
 import android.widget.Button;
@@ -85,7 +86,8 @@ public class VideoReviewActivity extends AppCompatActivity implements View.OnCli
                 break;
             case R.id.process_button:
                 Intent returnIntent = new Intent(this, EyeExamActivity.class);
-                returnIntent.putExtra("result",videoPath);
+                Log.i("LAUREL", "intent:" +videoPath.toString());
+                returnIntent.putExtra("video_path",videoPath);
                 setResult(Activity.RESULT_OK,returnIntent);
                 //startActivity()
                 finish();

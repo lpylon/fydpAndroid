@@ -52,6 +52,9 @@
         <activity
             android:name=".EyeExamActivity"
             android:label="New Eye Exam"></activity>
+        <activity
+            android:name=".ReviewExistingPhotosActivity"
+            android:label="Review Existing Photos"></activity>
     </application>
 
 </manifest>
