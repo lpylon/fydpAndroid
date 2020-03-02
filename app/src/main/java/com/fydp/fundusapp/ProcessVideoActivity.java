@@ -1,5 +1,7 @@
 package com.fydp.fundusapp;
 
+import android.app.Activity;
+import android.app.admin.DevicePolicyManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -7,6 +9,7 @@ import android.content.pm.FeatureInfo;
 import android.graphics.Bitmap;
 import android.media.MediaMetadataRetriever;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Environment;
 import android.support.annotation.RequiresApi;
@@ -27,6 +30,7 @@ import android.widget.ImageView;
 //import org.bytedeco.javacv.FFmpegFrameGrabber;
 //import org.bytedeco.javacv.Frame;
 //import org.bytedeco.javacv.FrameGrabber;
+import com.fydp.fundusapp.Objects.Exam;
 import com.fydp.fundusapp.Objects.ExamImage;
 import com.fydp.fundusapp.Objects.Patient;
 
@@ -59,12 +63,24 @@ import org.opencv.imgproc.Imgproc;
 import org.opencv.video.Video;
 import org.opencv.videoio.VideoCapture;
 
+import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.lang.reflect.Array;
+import java.net.URL;
+import java.net.URLConnection;
+import java.net.UnknownHostException;
 import java.security.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 import static java.lang.Thread.sleep;
 import static org.bytedeco.javacpp.opencv_imgproc.CV_BGRA2RGB;
@@ -91,6 +107,12 @@ public class ProcessVideoActivity extends AppCompatActivity implements View.OnCl
     ExamImage currentExamImage; //TODO could potentially need to be updated to 4 images
     Button saveButton;
     DatabaseHelper databaseHelper;
+    ImageView testImage;
+    pl.droidsonroids.gif.GifImageView loader;
+    String exam_id;
+
+
+
 
     static {
 //        System.loadLibrary("opencv_java4");
@@ -108,8 +130,8 @@ public class ProcessVideoActivity extends AppCompatActivity implements View.OnCl
         String patientId = prefs.getString(MainActivity.PATIENT_ID, "");
         databaseHelper = new DatabaseHelper(getApplicationContext());//TOdo probably save this context
         currentPatient = databaseHelper.getPatient(patientId);
-        saveButton = findViewById(R.id.save_button);
-        saveButton.setOnClickListener(this);
+        //saveButton = findViewById(R.id.save_button);
+        //saveButton.setOnClickListener(this);
 
 
         Intent intent = getIntent();
@@ -122,11 +144,17 @@ public class ProcessVideoActivity extends AppCompatActivity implements View.OnCl
         //videoPath = getFilesDir().getAbsolutePath() +"/" + "testVid1.mp4";
         videoPath = getFilesDir().getAbsolutePath() +"/" + "video1.mp4";
 
-        // videoPath = "/storage/emulated/0/VID_20200113_14_33_03.mp4";
+        //videoPath = "/storage/emulated/0/VID_20200113_14_33_03.mp4";
         imageMat=new Mat();
 //        Log.i("videoPath", videoPath);
+        //testImage = findViewById(R.id.test_image);
+        loader = findViewById(R.id.loader);
 
-        processImage();
+        //testImage.set
+
+
+        ProcessImageTask processImageTask = new ProcessImageTask();
+        processImageTask.execute("String");
 
        // imageMat=new Mat();
         /*
@@ -157,9 +185,9 @@ public class ProcessVideoActivity extends AppCompatActivity implements View.OnCl
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.save_button:
-                storeImage();
-                break;
+            //case R.id.save_button:
+            //    storeImage();
+             //   break;
         }
     }
 
@@ -179,6 +207,39 @@ public class ProcessVideoActivity extends AppCompatActivity implements View.OnCl
         */
 
     }
+
+
+
+    private class ProcessImageTask extends AsyncTask<String, Integer, Long> {
+
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            Log.i("LAUREL", "HERE ON PRE EXECUTE");
+        }
+
+
+        @RequiresApi(api = Build.VERSION_CODES.M)
+        @Override
+        protected Long doInBackground(String... strings) {
+            processImage();
+            storeImage();
+            return null;
+        }
+
+        protected void onProgressUpdate(Integer... progress) {
+            //updateProgress(progress[0]);
+        }
+
+        protected void onPostExecute(Long result) {
+            Intent viewResultIntent = new Intent(getApplicationContext(), ViewExamResultsActivity.class);
+            viewResultIntent.putExtra("exam_id", exam_id);
+            startActivity(viewResultIntent);
+        }
+    }
+
+
 
     private BaseLoaderCallback mLoaderCallback = new BaseLoaderCallback(this) {
         @RequiresApi(api = Build.VERSION_CODES.M)
@@ -346,21 +407,41 @@ public class ProcessVideoActivity extends AppCompatActivity implements View.OnCl
         Bitmap bitmap1 = Bitmap.createBitmap(result.width(), result.height(), Bitmap.Config.ARGB_8888);
 
         String timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new java.util.Date());
-        currentExamImage = new ExamImage(currentPatient.getPatientId(), timeStamp, ExamImage.LEFT, ExamImage.MACULA,"1234", bitmap1, bitmap1, bitmap1, bitmap1, bitmap1, bitmap1);
+        currentExamImage = new ExamImage("1", "1", "1" ,"1234", bitmap1, bitmap1, bitmap1, bitmap1, bitmap1, bitmap1);
 
 
        // H.convertTo(H, CV_8U);
 
         Utils.matToBitmap(result, bitmap1);
-        ImageView testImage = findViewById(R.id.test_image);
-        testImage.setImageBitmap(bitmap1);
+
+        runOnUiThread(new Runnable() {
+
+            @Override
+            public void run() {
+                //loader.setVisibility(View.GONE);
+                //testImage.setVisibility(View.VISIBLE);
+                //testImage.setImageBitmap(bitmap1);
+            }
+        });
+
 
 
     }
 
     private void storeImage(){
         if(currentExamImage!=null){
-            databaseHelper.saveEyeExam(currentExamImage);
+            String timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new java.util.Date());
+            String examId = UUID.randomUUID().toString();
+            exam_id = examId;
+            ExamImage examImage1 = new ExamImage(UUID.randomUUID().toString(), examId, ExamImage.LEFT, ExamImage.MACULA, currentExamImage.getCombinedImageData(), currentExamImage.getImage1(), currentExamImage.getImage2(), currentExamImage.getImage3(), currentExamImage.getImage4(), currentExamImage.getImage5());
+            ExamImage examImage2 = new ExamImage(UUID.randomUUID().toString(), examId, ExamImage.RIGHT, ExamImage.OPTIC_NERVE, currentExamImage.getCombinedImageData(), currentExamImage.getImage1(), currentExamImage.getImage2(), currentExamImage.getImage3(), currentExamImage.getImage4(), currentExamImage.getImage5());
+
+            List<ExamImage> examImages = Arrays.asList(examImage1, examImage2);
+
+            Exam exam = new Exam(examId, currentPatient.getPatientId(), "1234", timeStamp.toString(), examImages);
+
+            //ExamImage examImage1 = new ExamImage(UUID.randomUUID().toString(), )
+            databaseHelper.saveEyeExam(exam);
         }
 
     }

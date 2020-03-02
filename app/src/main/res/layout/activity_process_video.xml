@@ -11,12 +11,34 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-    <ImageView
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Processing Images..."
+            android:textColor="@color/colorPrimary"
+            android:textSize="18dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginBottom="25dp"
+            android:layout_gravity="center"
+            android:gravity="center"/>
+
+        <pl.droidsonroids.gif.GifImageView
+            android:layout_width="wrap_content"
+            android:layout_height="200dp"
+            android:id="@+id/loader"
+            android:src="@drawable/loader" />
+
+    <!--ImageView
         android:id="@+id/test_image"
         android:layout_width="wrap_content"
-        android:layout_height="200dp" />
+        android:layout_height="200dp"
+        android:visibility="gone"/-->
 
-    <Button
+
+
+
+    <!--Button
         android:id="@+id/save_button"
         android:layout_width="match_parent"
         android:layout_height="60dp"
@@ -29,7 +51,7 @@
         android:textSize="18sp"
         android:text="Save Video"
         android:background="@color/colorAccent"
-        />
+        /-->
 
     </LinearLayout>
 

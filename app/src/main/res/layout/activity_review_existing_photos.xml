@@ -1,12 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Fragments.PatientListFragment">
 
-    <ImageView
-        android:id="@+id/image_test"
-        android:layout_width="wrap_content"
-        android:layout_height="200dp" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/gray"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
+            android:layout_marginLeft="16dp"
+            android:textSize="18sp"
+            android:text="Enter Patient Info:"
+            android:textColor="@color/colorPrimary"
+            />
+
+        <EditText
+            android:id="@+id/search_phrase_exams"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="6dp"
+            android:layout_marginTop="0dp"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:textSize="18sp"
+            android:hint="Enter date of exam"
+            android:background="@color/white"
+
+            />
+
+        <Button
+            android:id="@+id/search_button_exams"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginBottom="0dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginRight="15dp"
+            android:gravity="center"
+            android:layout_alignParentBottom="true"
+            android:textSize="18sp"
+            android:text="Search"
+            android:background="@color/colorAccent"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="4dp"
+            android:layout_marginLeft="16dp"
+            android:textSize="18sp"
+            android:text="Exams:"
+            android:textColor="@color/colorPrimary"
+
+            />
+
+        <!--ListView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/searchlist"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginRight="15dp"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:inputType="text"
+            android:dividerHeight="4dp"
+
+            /-->
+
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/list_exams"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginRight="15dp"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:inputType="text"
+            android:dividerHeight="4dp"
+            android:background="@color/white"
+
+            />
+
+    </LinearLayout>
 
 
-</android.support.constraint.ConstraintLayout>
+
+</FrameLayout>

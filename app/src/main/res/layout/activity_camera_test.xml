@@ -1,36 +1,102 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/colorPrimary">
 
-    <!--tools:context="com.inducesmile.androidcameraapi2.AndroidCameraApi"/-->
-    <!--TextureView
-        android:id="@+id/texture"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/btn_takepicture"
-        android:layout_alignParentTop="true"/-->
 
-    <SurfaceView
-        android:id="@+id/surfaceView"
+<FrameLayout android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent">
+
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="30dp"
-        android:layout_above="@+id/btn_takepicture"/>
-    <Button
-        android:id="@+id/btn_takepicture"
+        android:orientation="vertical"
+        android:background="@color/colorPrimary">
+
+        <!--tools:context="com.inducesmile.androidcameraapi2.AndroidCameraApi"/-->
+        <!--TextureView
+            android:id="@+id/texture"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/btn_takepicture"
+            android:layout_alignParentTop="true"/-->
+
+        <!--FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <ImageView
+            android:id="@+id/goal_image"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginTop="30dp"
+            android:src="@drawable/lena"
+            />
+    </FrameLayout-->
+
+        <SurfaceView
+            android:id="@+id/surfaceView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/btn_takepicture"/>
+        <Button
+            android:id="@+id/btn_takepicture"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="16dp"
+            android:layout_marginTop="16dp"
+            android:text="Start Video"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:background="@color/colorAccent"
+            android:textColor="@color/colorPrimary"/>
+    </RelativeLayout>
+
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="16dp"
-        android:layout_marginTop="16dp"
-        android:text="Start Video"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp"
-        android:background="@color/colorAccent"
-        android:textColor="@color/colorPrimary"/>
-</RelativeLayout>
+        android:orientation="vertical"
+        >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text = "Find:"
+            android:gravity="center"
+            android:background="@color/colorPrimary"
+            android:textColor="@color/white"
+
+
+            />
+        <ImageView
+            android:id="@+id/goal_image"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@drawable/lena"
+            android:adjustViewBounds="true"
+            android:layout_margin="0dp"
+            />
+    </LinearLayout>
+
+
+    <!--RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/colorPrimary">
+
+
+      <ImageView
+            android:id="@+id/goal_image"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginTop="30dp"
+            android:foregroundGravity="left"
+            android:src="@drawable/perceptus_logo"
+            />
+
+    </RelativeLayout-->
+
+</FrameLayout>

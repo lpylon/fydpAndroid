@@ -42,7 +42,7 @@
             android:layout_marginLeft="6dp"
             android:textSize="16sp"
             android:fontFamily="@font/roboto_light"
-            android:text="Operator Name"
+            android:text="Laurel Pilon"
             android:textColor="@color/colorPrimary"
             android:background="@color/white"
             />
@@ -79,7 +79,7 @@
                 android:layout_marginBottom="4dp"
                 android:layout_marginLeft="6dp"
                 android:textSize="16sp"
-                android:text="Operator Qualification"
+                android:text="Optomitrist"
                 android:fontFamily="@font/roboto_light"
                 android:textColor="@color/colorPrimary"
                 android:background="@color/white"
@@ -116,7 +116,7 @@
             android:layout_marginLeft="6dp"
             android:textSize="16sp"
             android:fontFamily="@font/roboto_light"
-            android:text="Operator Phone Number"
+            android:text="(705)795-8318"
             android:textColor="@color/colorPrimary"
             android:background="@color/white"
             />

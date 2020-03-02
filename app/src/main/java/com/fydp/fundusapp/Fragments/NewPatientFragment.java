@@ -237,7 +237,7 @@ public class NewPatientFragment extends Fragment {
                 showIncompleteInfoMessage("Invalid last name.");
             }
            // else if(phoneNumber.getText().toString().equals("") || !(phoneNumber.getText().toString().matches(phoneNumberRegex))){
-            else if(phoneNumber.getText().toString().equals("") || !(isGlobalPhoneNumber(phoneNumber.getText().toString()))){
+            else if(phoneNumber.getText().toString().length() < 10 || phoneNumber.getText().toString().equals("") || !(isGlobalPhoneNumber(phoneNumber.getText().toString()))){
                 showIncompleteInfoMessage("Invalid phone number.");
             }
             else if(dateOfBirth.getText().toString().equals("")){

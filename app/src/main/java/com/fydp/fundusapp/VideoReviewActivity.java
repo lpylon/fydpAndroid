@@ -2,6 +2,7 @@ package com.fydp.fundusapp;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.MediaPlayer;
@@ -51,22 +52,42 @@ public class VideoReviewActivity extends AppCompatActivity implements View.OnCli
             e.printStackTrace();
         }
         */
-        MediaController mediaController = new MediaController(this);
+        MediaController_2 mediaController = new MediaController_2(this);
         mediaController.setAnchorView(videoView);
+       // mediaController.requestFocus();
 
         videoView = findViewById(R.id.video2);
         videoView.setVideoPath(videoPath);
         videoView.setRotation(90);
         videoView.setMediaController(mediaController);
+
+        videoView.setMediaController(mediaController);
+
+
         videoView.setOnClickListener(this);
         videoView.canPause();
         videoView.start();
+
+
+        //mediaController.show();
+
 
 
         retakeButton = findViewById(R.id.retake_button);
         retakeButton.setOnClickListener(this);
         acceptAndProcessButton = findViewById(R.id.process_button);
         acceptAndProcessButton.setOnClickListener(this);
+    }
+
+    public class MediaController_2 extends MediaController{
+        public MediaController_2(Context context) {
+            super(context);
+        }
+        public void hide() {
+        }
+        public void hidecontroller()    {
+            super.hide();
+        }
     }
 
 

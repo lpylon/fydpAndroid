@@ -3,6 +3,7 @@ package com.fydp.fundusapp;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -19,6 +20,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.fydp.fundusapp.Fragments.NewPatientFragment;
 import com.fydp.fundusapp.Fragments.NoPatientSignedInFragment;
@@ -36,6 +38,8 @@ public class PatientActivity extends AppCompatActivity
     boolean patientSignedIn = true;
 
     DrawerLayout drawer;
+    SharedPreferences prefs;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +47,9 @@ public class PatientActivity extends AppCompatActivity
         setContentView(R.layout.activity_patient);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        prefs = this.getSharedPreferences(
+                MainActivity.SHARED_PREFS_PATIENT, Context.MODE_PRIVATE);
 
 
 
@@ -168,7 +175,9 @@ public class PatientActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            return true;
+            Intent intent = new Intent(this, HelpMenu.class);
+            startActivity(intent);
+            //return true;
         }
 
         return super.onOptionsItemSelected(item);
@@ -210,8 +219,16 @@ public class PatientActivity extends AppCompatActivity
                 break;
 
             case R.id.nav_patient_log_out:
-                fragmentClass = NoPatientSignedInFragment.class;
-                //TODO do patient log out
+                String patientID = prefs.getString(MainActivity.PATIENT_ID, "");
+
+                if(patientID == null  || "".equals(patientID)){
+                    fragmentClass = NoPatientSignedInFragment.class;
+                    Toast.makeText(this, "No patient currently selected", Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    prefs.edit().clear().commit();
+                    fragmentClass = NoPatientSignedInFragment.class;
+                }
                 break;
             default:
                 fragmentClass = NoPatientSignedInFragment.class;

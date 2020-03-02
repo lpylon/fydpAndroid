@@ -1,15 +1,19 @@
 package com.fydp.fundusapp;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.fydp.fundusapp.Objects.Patient;
@@ -71,21 +75,101 @@ public class EyeExamActivity extends AppCompatActivity  implements View.OnClickL
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.right_optic_nerve:
-                Intent rightON = new Intent(this, VideoActivity.class);
-                startActivityForResult(rightON, 0);
+                //Intent rightON = new Intent(this, VideoActivity.class);
+                AlertDialog.Builder alertadd = new AlertDialog.Builder(this);
+                LayoutInflater factory = LayoutInflater.from(this);
+                final View view = factory.inflate(R.layout.alert_dialog_with_image, null);
+
+
+
+                alertadd.setView(view);
+
+                TextView dialogText = view.findViewById(R.id.dialog_text);
+                ImageView dialogImage = view.findViewById(R.id.dialog_imageview);
+                dialogText.setText("Align with patient's right eye:");
+                alertadd.setPositiveButton("Ready!", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dlg, int sumthin) {
+                        //TODO Do something here
+                        Intent rigthM = new Intent(getApplicationContext(), VideoActivity.class);
+                        startActivityForResult(rigthM, 0);
+                    }
+                });
+
+                alertadd.show();
+
+                //startActivityForResult(rightON, 0);
                 break;
             case R.id.right_macula:
-                Intent rigthM = new Intent(this, VideoActivity.class);
-                startActivityForResult(rigthM, 1);
+                //Intent rightON = new Intent(this, VideoActivity.class);
+                AlertDialog.Builder alertadd2 = new AlertDialog.Builder(this);
+                LayoutInflater factory2 = LayoutInflater.from(this);
+                final View view2 = factory2.inflate(R.layout.alert_dialog_with_image, null);
+
+
+
+                alertadd2.setView(view2);
+
+                TextView dialogText2 = view2.findViewById(R.id.dialog_text);
+                ImageView dialogImage2 = view2.findViewById(R.id.dialog_imageview);
+                dialogText2.setText("Align with patient's right eye:");
+                alertadd2.setPositiveButton("Ready!", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dlg, int sumthin) {
+                        //TODO Do something here
+                        Intent rigthM = new Intent(getApplicationContext(), VideoActivity.class);
+                        startActivityForResult(rigthM, 1);
+                    }
+                });
+
+                alertadd2.show();
+
                 break;
 
             case R.id.left_optic_nerve:
-                Intent leftON = new Intent(this, VideoActivity.class);
-                startActivityForResult(leftON, 2);
+                AlertDialog.Builder alertadd3 = new AlertDialog.Builder(this);
+                LayoutInflater factory3 = LayoutInflater.from(this);
+                final View view3 = factory3.inflate(R.layout.alert_dialog_with_image, null);
+
+                alertadd3.setView(view3);
+
+                TextView dialogText3 = view3.findViewById(R.id.dialog_text);
+                ImageView dialogImage3 = view3.findViewById(R.id.dialog_imageview);
+                dialogText3.setText("Align with patient's left eye:");
+                alertadd3.setPositiveButton("Ready!", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dlg, int sumthin) {
+                        //TODO Do something here
+                        Intent rigthM = new Intent(getApplicationContext(), VideoActivity.class);
+                        startActivityForResult(rigthM, 2);
+                    }
+                });
+
+                alertadd3.show();
+
+
+
+                //Intent leftON = new Intent(this, VideoActivity.class);
+                //startActivityForResult(leftON, 2);
                 break;
             case R.id.left_macula:
-                Intent leftM = new Intent(this, VideoActivity.class);
-                startActivityForResult(leftM, 3);
+                AlertDialog.Builder alertadd4 = new AlertDialog.Builder(this);
+                LayoutInflater factory4 = LayoutInflater.from(this);
+                final View view4 = factory4.inflate(R.layout.alert_dialog_with_image, null);
+
+
+
+                alertadd4.setView(view4);
+
+                TextView dialogText4 = view4.findViewById(R.id.dialog_text);
+                ImageView dialogImage4 = view4.findViewById(R.id.dialog_imageview);
+                dialogText4.setText("Align with patient's left eye:");
+                alertadd4.setPositiveButton("Ready!", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dlg, int sumthin) {
+                        //TODO Do something here
+                        Intent rigthM = new Intent(getApplicationContext(), VideoActivity.class);
+                        startActivityForResult(rigthM, 3);
+                    }
+                });
+
+                alertadd4.show();
                 break;
 
             case R.id.process:

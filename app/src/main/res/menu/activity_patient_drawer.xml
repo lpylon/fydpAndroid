@@ -43,7 +43,7 @@
             <item
                 android:id="@+id/nav_patient_log_out"
                 android:icon="@drawable/rough_logout_logo"
-                android:title="Patient Log Out" />
+                android:title="Leave Current Patient" />
         </menu>
     </item>
     </group>
