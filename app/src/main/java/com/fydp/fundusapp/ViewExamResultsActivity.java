@@ -48,8 +48,8 @@ public class ViewExamResultsActivity extends AppCompatActivity  implements View.
             Log.i("examImageSection", examImage.getEyeSection());
         }
 
-        initialCombinedImage.setImageBitmap(examImage1.getCombinedImageData());
-        leftOpticNerveImage.setImageBitmap(examImage1.getCombinedImageData());
+        //initialCombinedImage.setImageBitmap(examImage1.getCombinedImageData());
+        //leftOpticNerveImage.setImageBitmap(examImage1.getCombinedImageData());
 
         completeButton = findViewById(R.id.complete_button);
         completeButton.setOnClickListener(this);
@@ -72,7 +72,7 @@ public class ViewExamResultsActivity extends AppCompatActivity  implements View.
                 //    videoView.resume();
                 //}
                 break;
-   
+
         }
     }
 }

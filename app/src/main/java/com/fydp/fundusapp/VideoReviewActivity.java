@@ -123,7 +123,7 @@ public class VideoReviewActivity extends AppCompatActivity implements View.OnCli
     private void showAreYouSureMessage(){
         AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
         builder1.setTitle("Are you sure you want to retake?");
-        builder1.setMessage("If you selecte yes, the current video will be deleted and this cannot be undone.");
+        builder1.setMessage("If you select yes, the current video will be deleted and this cannot be undone.");
         builder1.setCancelable(true);
 
         builder1.setPositiveButton(

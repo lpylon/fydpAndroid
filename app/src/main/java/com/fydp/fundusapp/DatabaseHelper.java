@@ -153,6 +153,31 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return userList;
     }
 
+    public List<Exam> getSearchedExam(String searchstring) {
+        List<Exam> examList = new ArrayList<>();
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery("select " + EXAM_ID + ", " + PATIENT_ID + ", " + EXAMINER_ID + ", " + EXAM_DATE +  " from " + TABLE_EXAMS + " Where " + EXAM_DATE + "  like '%" + searchstring + "%'",   null);
+        if (cursor.moveToFirst()) {
+            do {
+                String examId = cursor.getString(0);
+                String patientId = cursor.getString(1);
+                String examinerId = cursor.getString(2);
+                String examDate = cursor.getString(3);
+
+
+
+                Exam exam = new Exam(examId, patientId, examinerId, examDate, Arrays.asList());
+                examList.add(exam);
+
+
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        return examList;
+    }
+
+
     public List<Patient> getSearchedPatient(String searchstring) {
         List<Patient> userList = new ArrayList<>();
         SQLiteDatabase db = getReadableDatabase();

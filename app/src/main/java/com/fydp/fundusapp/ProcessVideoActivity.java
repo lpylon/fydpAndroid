@@ -76,9 +76,11 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.net.UnknownHostException;
 import java.security.Timestamp;
+import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -430,7 +432,10 @@ public class ProcessVideoActivity extends AppCompatActivity implements View.OnCl
 
     private void storeImage(){
         if(currentExamImage!=null){
-            String timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new java.util.Date());
+            String timestamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new java.util.Date());
+            Date date = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").parse(timestamp, new ParsePosition(0));
+
+            String timeStampString = date.toLocaleString();
             String examId = UUID.randomUUID().toString();
             exam_id = examId;
             ExamImage examImage1 = new ExamImage(UUID.randomUUID().toString(), examId, ExamImage.LEFT, ExamImage.MACULA, currentExamImage.getCombinedImageData(), currentExamImage.getImage1(), currentExamImage.getImage2(), currentExamImage.getImage3(), currentExamImage.getImage4(), currentExamImage.getImage5());
@@ -438,7 +443,7 @@ public class ProcessVideoActivity extends AppCompatActivity implements View.OnCl
 
             List<ExamImage> examImages = Arrays.asList(examImage1, examImage2);
 
-            Exam exam = new Exam(examId, currentPatient.getPatientId(), "1234", timeStamp.toString(), examImages);
+            Exam exam = new Exam(examId, currentPatient.getPatientId(), "1234", timeStampString, examImages);
 
             //ExamImage examImage1 = new ExamImage(UUID.randomUUID().toString(), )
             databaseHelper.saveEyeExam(exam);

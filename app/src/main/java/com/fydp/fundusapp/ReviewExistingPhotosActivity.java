@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -30,10 +31,14 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
-public class ReviewExistingPhotosActivity extends AppCompatActivity {
+public class ReviewExistingPhotosActivity extends AppCompatActivity implements View.OnClickListener {
     ImageView image;
     Patient currentPatient;
     private ListView searchList;
+    DatabaseHelper databaseHelper;
+
+    Button searchButton;
+    TextView searchKey;
 
 
 
@@ -45,9 +50,12 @@ public class ReviewExistingPhotosActivity extends AppCompatActivity {
         SharedPreferences prefs = getApplicationContext().getSharedPreferences(
                 MainActivity.SHARED_PREFS_PATIENT, Context.MODE_PRIVATE);
         String patientId = prefs.getString(MainActivity.PATIENT_ID, "");
-        DatabaseHelper databaseHelper = new DatabaseHelper(getApplicationContext());//TODO probably save this context
+        databaseHelper = new DatabaseHelper(getApplicationContext());//TODO probably save this context
         currentPatient = databaseHelper.getPatient(patientId);
 
+        searchButton = findViewById(R.id.search_button_exams);
+        searchButton.setOnClickListener(this);
+        searchKey = findViewById(R.id.search_phrase_exams);
 
         databaseHelper = new DatabaseHelper(this);
 
@@ -66,7 +74,8 @@ public class ReviewExistingPhotosActivity extends AppCompatActivity {
                 String timestamp = exams.get(position).getExamDate();
                 Date date = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").parse(timestamp, new ParsePosition(0));
                 //String date = new Date(Integer.valueOf(timestamp)).toString();
-                item.setText(date.toLocaleString());
+                //item.setText(date.toLocaleString());
+                item.setText(timestamp);
                 item.setTextSize(TypedValue.COMPLEX_UNIT_DIP,18);
                 return item;
             }
@@ -118,4 +127,48 @@ public class ReviewExistingPhotosActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public void onClick(View v) {
+        switch(v.getId()) {
+
+            case R.id.search_button_exams:
+
+                try {
+                    InputMethodManager imm = (InputMethodManager)this.getSystemService(INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(Objects.requireNonNull(this.getCurrentFocus()).getWindowToken(), 0);
+                } catch (Exception e) {
+                    // TODO: handle exception
+                }
+
+
+                final List<Exam> exams = databaseHelper.getSearchedExam(searchKey.getText().toString());
+                ArrayAdapter arrayAdapter = new ArrayAdapter<Exam>(this.getApplicationContext(), android.R.layout.simple_expandable_list_item_1, exams){
+                    @Override
+                    public View getView(int position, View convertView,  ViewGroup exam){
+                        TextView item = (TextView) super.getView(position,convertView, exam);
+
+                        item.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary));
+
+                        //new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new java.util.Date());
+                        String timestamp = exams.get(position).getExamDate();
+                        Date date = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").parse(timestamp, new ParsePosition(0));
+                        //String date = new Date(Integer.valueOf(timestamp)).toString();
+                        //item.setText(date.toLocaleString());
+                        item.setText(timestamp);
+                        item.setTextSize(TypedValue.COMPLEX_UNIT_DIP,18);
+                        return item;
+                    }
+                };
+                searchList.setAdapter(arrayAdapter);
+                searchList.setOnItemClickListener((parent, view, position, id) -> {
+                    Intent viewExam = new Intent(this, ViewExamResultsActivity.class);
+                    viewExam.putExtra("exam_id", exams.get(position).getExamId());
+                    startActivity(viewExam);
+
+                });
+
+            break;
+
+         }
+    }
 }

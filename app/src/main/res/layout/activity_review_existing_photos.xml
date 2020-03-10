@@ -18,7 +18,7 @@
             android:layout_marginBottom="4dp"
             android:layout_marginLeft="16dp"
             android:textSize="18sp"
-            android:text="Enter Patient Info:"
+            android:text="Enter Exam Info:"
             android:textColor="@color/colorPrimary"
             />
 
@@ -33,7 +33,7 @@
             android:layout_centerVertical="true"
             android:gravity="center"
             android:textSize="18sp"
-            android:hint="Enter date of exam"
+            android:hint="Enter month or year of exam"
             android:background="@color/white"
 
             />

@@ -127,6 +127,8 @@ public class VideoActivity extends AppCompatActivity implements SurfaceHolder.Ca
                     isRecording = false;
 
                     showVideoReviewMessage();
+                    recordButton.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+
 
                     //Intent videoReviewIntent = new Intent(this, );
                     //intent.putExtra();
@@ -137,6 +139,7 @@ public class VideoActivity extends AppCompatActivity implements SurfaceHolder.Ca
 
                 } else {
 
+                    recordButton.setBackgroundColor(getResources().getColor(R.color.red));
 
                     if(prepareForVideoRecording()){
 

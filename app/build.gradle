@@ -59,6 +59,9 @@ dependencies {
 
     implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.0'
 
+    //implementation 'com.github.MikeOrtiz:TouchImageView:2.3.3' // Android X
+
+
     //implementation group: 'org.bytedeco', name: 'javacv', version: '0.9'
     //implementation group: 'org.bytedeco.javacpp-presets', name: 'opencv', version: '2.4.9-0.9', classifier:    'android-arm'
     //implementation group: 'org.bytedeco.javacpp-presets', name: 'ffmpeg', version: '2.3-0.9', classifier: 'android-arm'
