@@ -11,6 +11,8 @@ import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.graphics.ImageFormat;
 import android.graphics.PixelFormat;
+import android.graphics.Rect;
+import android.graphics.RectF;
 import android.graphics.SurfaceTexture;
 import android.hardware.Camera;
 import android.hardware.camera2.CameraAccessException;
@@ -48,6 +50,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.fydp.fundusapp.R;
@@ -74,6 +77,9 @@ public class VideoActivity extends AppCompatActivity implements SurfaceHolder.Ca
     private MediaRecorder mediaRecorder;
     private boolean isRecording = false;
     private File file;
+    private Boolean isZoom = false;
+    private int postZoomCount = 0;
+    private ImageView imageView;
 
     private static final int MEDIA_TYPE_VIDEO = 3;
 
@@ -88,6 +94,11 @@ public class VideoActivity extends AppCompatActivity implements SurfaceHolder.Ca
         surfaceHolder = surfaceView.getHolder();
         surfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
         surfaceHolder.addCallback((SurfaceHolder.Callback) this);
+
+        imageView = findViewById(R.id.goal_image);
+        Intent intent = getIntent();
+        int drawableExampleImage = intent.getIntExtra("example_image", 0);
+        imageView.setImageDrawable(getDrawable(drawableExampleImage));
 
         /*
         CameraManager camManager = (CameraManager) getSystemService(Context.CAMERA_SERVICE);
@@ -265,7 +276,7 @@ public class VideoActivity extends AppCompatActivity implements SurfaceHolder.Ca
        // parameters.setPreviewSize(150, 200);
         parameters.setPreviewFrameRate(20);
        // parameters.setRotation(90);
-        parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE);
+        parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_VIDEO);
         parameters.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
         //parameters.getMaxZoom();
         camera.setParameters(parameters);
@@ -301,31 +312,219 @@ public class VideoActivity extends AppCompatActivity implements SurfaceHolder.Ca
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         // Get the pointer ID
-        Camera.Parameters params = camera.getParameters();
+        //Camera.Parameters params = camera.getParameters();
         int action = event.getAction();
 
+        Log.i("pointer count:", String.valueOf(event.getPointerCount()));
 
         if (event.getPointerCount() > 1) {
+            isZoom = true;
             // handle multi-touch events
             if (action == MotionEvent.ACTION_POINTER_DOWN) {
                 mDist = getFingerSpacing(event);
-            } else if (action == MotionEvent.ACTION_MOVE && params.isZoomSupported()) {
+            } else if (action == MotionEvent.ACTION_MOVE && parameters.isZoomSupported()) {
                 camera.cancelAutoFocus();
-                handleZoom(event, params);
+                handleZoom(event, parameters);
             }
-        } else {
+        } else if (event.getPointerCount() == 1){
+            if (camera != null) {
+                if(isZoom){
+                    postZoomCount++;
+                    if(postZoomCount > 5){
+                        isZoom = false;
+                        postZoomCount = 0;
+
+                    }
+                    //isZoom = false;
+                }
+                else {
+                    handleFocus(event, parameters);
+                }
+                /*
+                camera.cancelAutoFocus();
+                Rect focusRect = calculateTapArea(event.getX(), event.getY(), 1f);
+                Rect meteringRect = calculateTapArea(event.getX(), event.getY(), 1.5f);
+
+                Camera.Parameters parameters = camera.getParameters();
+                parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_AUTO);
+                parameters.setFocusAreas(Arrays.asList(new Camera.Area(focusRect, 1000)));
+
+                //if (meteringAreaSupported) {
+                //    parameters.setMeteringAreas(Arrays.asList(new Camera.Area(meteringRect, 1000)));
+                //}
+
+                camera.setParameters(parameters);
+                camera.autoFocus(this);
+                */
+
+            }
+            return true;
+        }
+
+
+        else {
             // handle single touch events
             if (action == MotionEvent.ACTION_UP) {
-                handleFocus(event, params);
+                handleFocus(event, parameters);
             }
         }
         return true;
     }
 
 
+    /*
+    private void focusOnTouch(MotionEvent event) {
+        if (camera != null ) {
+
+            //Camera.Parameters parameters = camera.getParameters();
+            if (parameters.getMaxNumMeteringAreas() > 0){
+                Log.i("LAUREL","fancy !");
+                Rect rect = calculateFocusArea(event.getX(), event.getY());
+
+
+                //parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_AUTO);
+                List<Camera.Area> meteringAreas = new ArrayList<Camera.Area>();
+                meteringAreas.add(new Camera.Area(rect, 800));
+                parameters.setFocusAreas(meteringAreas);
+
+                camera.setParameters(parameters);
+                handleFocus(event, parameters);
+                //camera.autoFocus(mAutoFocusTakePictureCallback);
+            }else {
+                handleFocus(event, parameters);
+
+                //camera.autoFocus(mAutoFocusTakePictureCallback);
+            }
+        }
+    }
+    */
+
+    public void handleFocus(MotionEvent event, Camera.Parameters params) {
+        int pointerId = event.getPointerId(0);
+        int pointerIndex = event.findPointerIndex(pointerId);
+        // Get the pointer's current position
+        float x = event.getX(pointerIndex);
+        float y = event.getY(pointerIndex);
+
+        Rect touchRect = new Rect(
+                (int) (x - 100),
+                (int) (y - 100),
+                (int) (x + 100),
+                (int) (y + 100) );
+        final Rect targetFocusRect = new Rect(
+                touchRect.left * 2000/surfaceView.getWidth() - 1000,
+                touchRect.top * 2000/surfaceView.getHeight() - 1000,
+                touchRect.right * 2000/surfaceView.getWidth() - 1000,
+                touchRect.bottom * 2000/surfaceView.getHeight() - 1000);
+
+        List<String> supportedFocusModes = params.getSupportedFocusModes();
+        if (supportedFocusModes != null && supportedFocusModes.contains(Camera.Parameters.FOCUS_MODE_AUTO)) {
+            try {
+                List<Camera.Area> focusList = new ArrayList<Camera.Area>();
+                Camera.Area focusArea = new Camera.Area(targetFocusRect, 1000);
+                focusList.add(focusArea);
+
+
+                params.setFocusAreas(focusList);
+                params.setMeteringAreas(focusList);
+                camera.setParameters(params);
+
+
+
+                /* mCamera.autoFocus(this);*/
+            } catch (Exception e) {
+                e.printStackTrace();
+                Log.i("LAUREL", "Unable to autofocus");
+            }
+        }
+    }
+
+    /*
+    private Camera.AutoFocusCallback mAutoFocusTakePictureCallback = new Camera.AutoFocusCallback() {
+        @Override
+        public void onAutoFocus(boolean success, Camera camera) {
+            if (success) {
+                // do something...
+                Log.i("tap_to_focus","success!");
+            } else {
+                // do something...
+                Log.i("tap_to_focus","fail!");
+            }
+        }
+    };
+    */
+
+    /*
+    private Rect calculateFocusArea(float x, float y) {
+        int left = clamp(Float.valueOf((x / surfaceView.getWidth()) * 2000 - 1000).intValue(), 10);
+        int top = clamp(Float.valueOf((y / surfaceView.getHeight()) * 2000 - 1000).intValue(), 10);
+
+        return new Rect(left, top, left + 10, top + 10);
+    }
+
+    private int clamp(int touchCoordinateInCameraReper, int focusAreaSize) {
+        int result;
+        if (Math.abs(touchCoordinateInCameraReper)+focusAreaSize/2>1000){
+            if (touchCoordinateInCameraReper>0){
+                result = 1000 - focusAreaSize/2;
+            } else {
+                result = -1000 + focusAreaSize/2;
+            }
+        } else{
+            result = touchCoordinateInCameraReper - focusAreaSize/2;
+        }
+        return result;
+    }
+    */
+
+    /*
+    public void doTouchFocus(final Rect tfocusRect) {
+        try {
+            List<Camera.Area> focusList = new ArrayList<Camera.Area>();
+            Camera.Area focusArea = new Camera.Area(tfocusRect, );
+            focusList.add(focusArea);
+
+            Camera.Parameters param = camera.getParameters();
+            param.setFocusAreas(focusList);
+            param.setMeteringAreas(focusList);
+            camera.setParameters(param);
+
+            camera.autoFocus(myAutoFocusCallback);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.i("LAUREL", "Unable to autofocus");
+        }
+    }
+    */
+
+
+    /*
+    private Rect calculateTapArea(float x, float y, float coefficient) {
+        int areaSize = Float.valueOf(focusAreaSize * coefficient).intValue();
+
+        int left = clamp((int) x - areaSize / 2, 0, this.getSurfaceView().getWidth() - areaSize);
+        int top = clamp((int) y - areaSize / 2, 0, this.getSurfaceView().getHeight() - areaSize);
+
+        RectF rectF = new RectF(left, top, left + areaSize, top + areaSize);
+        //matrix.mapRect(rectF);
+
+        return new Rect(Math.round(rectF.left), Math.round(rectF.top), Math.round(rectF.right), Math.round(rectF.bottom));
+    }
+
+    private int clamp(int x, int min, int max) {
+        if (x > max) {
+            return max;
+        }
+        if (x < min) {
+            return min;
+        }
+        return x;
+    }
+    */
+
     private void handleZoom(MotionEvent event, Camera.Parameters params) {
-        int maxZoom = params.getMaxZoom();
-        int zoom = params.getZoom();
+        int maxZoom = parameters.getMaxZoom();
+        int zoom = parameters.getZoom();
         float newDist = getFingerSpacing(event);
         if (newDist > mDist) {
             //zoom in
@@ -337,10 +536,13 @@ public class VideoActivity extends AppCompatActivity implements SurfaceHolder.Ca
                 zoom--;
         }
         mDist = newDist;
-        params.setZoom(zoom);
+        parameters.setZoom(zoom);
         camera.setParameters(params);
     }
 
+
+
+    /*
     public void handleFocus(MotionEvent event, Camera.Parameters params) {
         int pointerId = event.getPointerId(0);
         int pointerIndex = event.findPointerIndex(pointerId);
@@ -358,6 +560,7 @@ public class VideoActivity extends AppCompatActivity implements SurfaceHolder.Ca
             });
         }
     }
+    */
 
     private float getFingerSpacing(MotionEvent event) {
         // ...
@@ -375,6 +578,8 @@ public class VideoActivity extends AppCompatActivity implements SurfaceHolder.Ca
         finish();
 
     }
+
+
 
     /*
     MediaRecorder recorder;

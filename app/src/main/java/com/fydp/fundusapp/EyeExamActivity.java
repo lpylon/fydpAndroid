@@ -87,10 +87,13 @@ public class EyeExamActivity extends AppCompatActivity  implements View.OnClickL
                 TextView dialogText = view.findViewById(R.id.dialog_text);
                 ImageView dialogImage = view.findViewById(R.id.dialog_imageview);
                 dialogText.setText("Align with patient's right eye:");
+                dialogImage.setImageDrawable(getDrawable(R.drawable.right_side_guide));
+
                 alertadd.setPositiveButton("Ready!", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dlg, int sumthin) {
                         //TODO Do something here
                         Intent rigthM = new Intent(getApplicationContext(), VideoActivity.class);
+                        rigthM.putExtra("example_image", R.drawable.right_optic_disk_example);
                         startActivityForResult(rigthM, 0);
                     }
                 });
@@ -111,11 +114,13 @@ public class EyeExamActivity extends AppCompatActivity  implements View.OnClickL
 
                 TextView dialogText2 = view2.findViewById(R.id.dialog_text);
                 ImageView dialogImage2 = view2.findViewById(R.id.dialog_imageview);
+                dialogImage2.setImageDrawable(getDrawable(R.drawable.right_side_guide));
                 dialogText2.setText("Align with patient's right eye:");
                 alertadd2.setPositiveButton("Ready!", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dlg, int sumthin) {
                         //TODO Do something here
                         Intent rigthM = new Intent(getApplicationContext(), VideoActivity.class);
+                        rigthM.putExtra("example_image", R.drawable.fovea_example);
                         startActivityForResult(rigthM, 1);
                     }
                 });
@@ -133,11 +138,13 @@ public class EyeExamActivity extends AppCompatActivity  implements View.OnClickL
 
                 TextView dialogText3 = view3.findViewById(R.id.dialog_text);
                 ImageView dialogImage3 = view3.findViewById(R.id.dialog_imageview);
+                dialogImage3.setImageDrawable(getDrawable(R.drawable.left_side_guide));
                 dialogText3.setText("Align with patient's left eye:");
                 alertadd3.setPositiveButton("Ready!", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dlg, int sumthin) {
                         //TODO Do something here
                         Intent rigthM = new Intent(getApplicationContext(), VideoActivity.class);
+                        rigthM.putExtra("example_image", R.drawable.left_optic_nerve_example);
                         startActivityForResult(rigthM, 2);
                     }
                 });
@@ -160,11 +167,13 @@ public class EyeExamActivity extends AppCompatActivity  implements View.OnClickL
 
                 TextView dialogText4 = view4.findViewById(R.id.dialog_text);
                 ImageView dialogImage4 = view4.findViewById(R.id.dialog_imageview);
+                dialogImage4.setImageDrawable(getDrawable(R.drawable.left_side_guide));
                 dialogText4.setText("Align with patient's left eye:");
                 alertadd4.setPositiveButton("Ready!", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dlg, int sumthin) {
                         //TODO Do something here
                         Intent rigthM = new Intent(getApplicationContext(), VideoActivity.class);
+                        rigthM.putExtra("example_image", R.drawable.fovea_example);
                         startActivityForResult(rigthM, 3);
                     }
                 });

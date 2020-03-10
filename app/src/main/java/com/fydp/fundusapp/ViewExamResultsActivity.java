@@ -1,22 +1,27 @@
 package com.fydp.fundusapp;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.media.Image;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 
 import com.fydp.fundusapp.Objects.ExamImage;
 
 import java.util.List;
 
-public class ViewExamResultsActivity extends AppCompatActivity {
+public class ViewExamResultsActivity extends AppCompatActivity  implements View.OnClickListener {
 
     List<ExamImage> examImages;
     DatabaseHelper databaseHelper;
     String examId;
     ImageView initialCombinedImage;
+    Button completeButton;
+
 
 
     @Override
@@ -46,5 +51,28 @@ public class ViewExamResultsActivity extends AppCompatActivity {
         initialCombinedImage.setImageBitmap(examImage1.getCombinedImageData());
         leftOpticNerveImage.setImageBitmap(examImage1.getCombinedImageData());
 
+        completeButton = findViewById(R.id.complete_button);
+        completeButton.setOnClickListener(this);
+
+    }
+
+
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.complete_button: //TODO check out what is wrong with this onclick listener
+                Intent completeIntent = new Intent(this, PatientActivity.class);
+                startActivity(completeIntent);
+
+                //if(videoView.isPlaying()){
+                //    videoView.pause();
+                //}
+                //else {
+                //    videoView.resume();
+                //}
+                break;
+   
+        }
     }
 }
